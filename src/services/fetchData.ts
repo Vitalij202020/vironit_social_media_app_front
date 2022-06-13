@@ -8,9 +8,7 @@ export const post = async (url: string, data?: any) => {
 };
 
 const getConfig = (token: string | null) => ({
-    headers: {
-        Authorization: `Bearer ${token}`,
-    },
+    headers: {Authorization: `Bearer ${token}`},
 });
 
 export function getToken() {

@@ -1,11 +1,22 @@
 import React, {FC} from 'react';
-import {Avatar, Button, Container, Grid, TextField, Typography} from "@mui/material";
+import {
+    Avatar,
+    Button,
+    Container,
+    Grid,
+    LinearProgress,
+    TextField,
+    Typography
+} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
 import {IUserLogin} from "../../redux/types/userTypes";
+import {useActions} from "../../hooks/useActions";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
+import Progress from "./Progress";
 
 
 const MyDiv = styled("div")(({ theme }) => ({
@@ -26,10 +37,12 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 
 const loginSchema = yup.object().shape({
     email: yup.string().email().required(),
-    password: yup.string().min(4).max(20).required(),
+    password: yup.string().min(5).max(20).required(),
 });
 
 const LoginForm: FC = () => {
+    const {loading, error, success} = useTypedSelector(state => state.auth)
+    const {login} = useActions()
 
     const {
         control,
@@ -39,10 +52,12 @@ const LoginForm: FC = () => {
 
     const onSubmit: SubmitHandler<IUserLogin> = (data: IUserLogin) => {
         console.log(data);
+        login(data)
     };
 
     return (
         <Container component="main" maxWidth="xs">
+            <Progress data={{loading, error, success}}/>
             <MyDiv>
                 <StyledAvatar>
                     <LockOutlinedIcon />
@@ -50,6 +65,7 @@ const LoginForm: FC = () => {
                 <Typography component="h1" variant="h5">
                     Sign In
                 </Typography>
+                <LinearProgress/>
                 <MyForm onSubmit={handleSubmit(onSubmit)}>
                     <Controller
                         control={control}

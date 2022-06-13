@@ -3,6 +3,7 @@ import {styled} from "@mui/material/styles";
 // @ts-ignore
 import SocialPic from '../assets/images/social_pic.png';
 import LoginForm from "../components/forms/LoginForm";
+import {LinearProgress} from "@mui/material";
 
 const RootDiv = styled("div")({
     width: "100vw",
@@ -30,8 +31,10 @@ const MyImg = styled("img")({
 });
 
 const LoginPage = () => {
+
     return (
         <RootDiv>
+            <LinearProgress/>
             <ImgDiv>
                 <MyImg src={SocialPic} alt="connections"/>
             </ImgDiv>

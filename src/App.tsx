@@ -12,6 +12,7 @@ function App() {
           {/*<HomePage/>*/}
           <RegisterPage/>
           {/*<LoginPage/>*/}
+          {/*<Loading/>*/}
       </>
   );
 }

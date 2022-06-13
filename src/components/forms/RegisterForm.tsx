@@ -17,6 +17,8 @@ import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
 import {IUserRegister} from "../../redux/types/userTypes";
 import {useActions} from "../../hooks/useActions";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
+import Progress from "./Progress";
 
 
 const MyDiv = styled("div")(({theme}) => ({
@@ -47,7 +49,7 @@ const registerSchema = yup.object().shape({
     dateOfBirth: yup.string().required(),
     nickName: yup.string().min(2).required(),
     email: yup.string().email().required(),
-    password: yup.string().min(4).max(20).required(),
+    password: yup.string().min(5).max(20).required(),
     confirmPassword: yup.string()
         .test('passwords-match', 'passwords must match', function (value) {
             return this.parent.password === value
@@ -56,6 +58,7 @@ const registerSchema = yup.object().shape({
 
 
 const RegisterForm = () => {
+    const {error, loading, success} = useTypedSelector(state => state.auth)
     const {register} = useActions()
 
     const {
@@ -72,7 +75,7 @@ const RegisterForm = () => {
     return (
         <>
             <Container component="main" maxWidth="xs">
-                <CssBaseline/>
+                <Progress data={{loading, error, success}}/>
                 <MyDiv>
                     <StyledAvatar color={"black"}>
                         <LockOutlinedIcon/>
