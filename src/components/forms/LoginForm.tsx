@@ -17,6 +17,7 @@ import {IUserLogin} from "../../redux/types/userTypes";
 import {useActions} from "../../hooks/useActions";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import Progress from "./Progress";
+import {Link} from "react-router-dom";
 
 
 const MyDiv = styled("div")(({ theme }) => ({
@@ -106,7 +107,7 @@ const LoginForm: FC = () => {
                     <Button fullWidth variant="contained" type="submit" sx={{m: "16px 0", float: "right"}}>Login</Button>
                     <Grid container justifyContent={"center"}>
                         <Grid item>
-                            <a href="#">Don't have an account? Register</a>
+                            <Link to="/register">Don't have an account? Register</Link>
                         </Grid>
                     </Grid>
                 </MyForm>
