@@ -67,7 +67,7 @@ function PostsList() {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
+                    <FavoriteIcon color={'error'} />
                 </IconButton>
                 <IconButton aria-label="share">
                     <ShareIcon />

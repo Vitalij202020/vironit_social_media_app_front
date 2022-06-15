@@ -17,6 +17,7 @@ export interface AuthState {
 export enum AuthActionsTypes {
     AUTH_REQUEST = 'AUTH_REQUEST',
     AUTH_SUCCESS = 'REGISTER_USER_SUCCESS',
+    AUTH_REFRESH_USER_SUCCESS = 'AUTH_REFRESH_USER_SUCCESS',
     AUTH_ERROR = 'REGISTER_USER_ERROR',
 }
 
@@ -29,6 +30,11 @@ interface AuthSuccess {
     payload: IUserResponse;
 }
 
+interface AuthRefreshUserSuccess {
+    type: AuthActionsTypes.AUTH_REFRESH_USER_SUCCESS;
+    payload: IUser;
+}
+
 interface AuthError {
     type: AuthActionsTypes.AUTH_ERROR;
     payload: string;
@@ -37,4 +43,5 @@ interface AuthError {
 export type AuthAction =
     AuthRequest
     | AuthSuccess
+    | AuthRefreshUserSuccess
     | AuthError

@@ -8,6 +8,7 @@ import Divider from '@mui/material/Divider';
 import HomeIcon from '@mui/icons-material/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ChatIcon from '@mui/icons-material/Chat';
+import PersonIcon from '@mui/icons-material/Person';
 
 function LeftSide() {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -29,11 +30,20 @@ function LeftSide() {
                     <ListItemIcon>
                         <HomeIcon />
                     </ListItemIcon>
-                    <ListItemText primary="HomePage" />
+                    <ListItemText primary="Main" />
                 </ListItemButton>
                 <ListItemButton
                     selected={selectedIndex === 1}
                     onClick={(event) => handleListItemClick(event, 1)}
+                >
+                    <ListItemIcon>
+                        <PersonIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Profile" />
+                </ListItemButton>
+                <ListItemButton
+                    selected={selectedIndex === 2}
+                    onClick={(event) => handleListItemClick(event, 2)}
                 >
                     <ListItemIcon>
                         <NotificationsIcon />
@@ -41,8 +51,8 @@ function LeftSide() {
                     <ListItemText primary="Notifications" />
                 </ListItemButton>
                 <ListItemButton
-                    selected={selectedIndex === 2}
-                    onClick={(event) => handleListItemClick(event, 2)}
+                    selected={selectedIndex === 3}
+                    onClick={(event) => handleListItemClick(event, 3)}
                 >
                     <ListItemIcon>
                         <ChatIcon />
@@ -53,14 +63,14 @@ function LeftSide() {
             <Divider />
             <List component="nav" aria-label="secondary mailbox folder">
                 <ListItemButton
-                    selected={selectedIndex === 3}
-                    onClick={(event) => handleListItemClick(event, 3)}
+                    selected={selectedIndex === 4}
+                    onClick={(event) => handleListItemClick(event, 4)}
                 >
                     <ListItemText primary="Item" />
                 </ListItemButton>
                 <ListItemButton
-                    selected={selectedIndex === 4}
-                    onClick={(event) => handleListItemClick(event, 4)}
+                    selected={selectedIndex === 5}
+                    onClick={(event) => handleListItemClick(event, 5)}
                 >
                     <ListItemText primary="Item" />
                 </ListItemButton>

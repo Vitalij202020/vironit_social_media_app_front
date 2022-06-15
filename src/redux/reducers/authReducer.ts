@@ -16,7 +16,7 @@ const authReducer = (state: AuthState = initialState, action: AuthAction ): Auth
                 ...state,
                 loading: true
             }
-        case  AuthActionsTypes.AUTH_SUCCESS:
+        case AuthActionsTypes.AUTH_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -25,7 +25,14 @@ const authReducer = (state: AuthState = initialState, action: AuthAction ): Auth
                 success: action.payload.msg,
                 token: action.payload.token
             }
-        case  AuthActionsTypes.AUTH_ERROR:
+        case AuthActionsTypes.AUTH_REFRESH_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: '',
+                user: action.payload,
+            }
+        case AuthActionsTypes.AUTH_ERROR:
             return {
                 ...state,
                 loading: false,
