@@ -15,7 +15,10 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import {Container} from "@mui/material";
+import {Avatar, Container} from "@mui/material";
+import AdbIcon from '@mui/icons-material/Adb';
+import {useActions} from "../hooks/useActions";
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -58,6 +61,9 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 function Header() {
+    const {logout} = useActions();
+    const {user} = useTypedSelector(state => state.userLogin)
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -70,6 +76,13 @@ function Header() {
 
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
+    };
+
+    const onLogout = () => {
+        setAnchorEl(null);
+        handleMobileMenuClose();
+        console.log('--- Logout ---')
+        logout()
     };
 
     const handleMenuClose = () => {
@@ -99,7 +112,7 @@ function Header() {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={onLogout}>Logout</MenuItem>
         </Menu>
     );
 
@@ -169,11 +182,21 @@ function Header() {
                         >
                             <MenuIcon/>
                         </IconButton>
+                        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                         <Typography
                             variant="h6"
                             noWrap
-                            component="div"
-                            sx={{display: {xs: 'none', sm: 'block'}}}
+                            component="a"
+                            href="/"
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' },
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                            }}
                         >
                             SOCIAL
                         </Typography>
@@ -211,7 +234,7 @@ function Header() {
                                 onClick={handleProfileMenuOpen}
                                 color="inherit"
                             >
-                                <AccountCircle/>
+                                <Avatar alt="Remy Sharp" src={user?.avatar} />
                             </IconButton>
                         </Box>
                         <Box sx={{display: {xs: 'flex', md: 'none'}}}>

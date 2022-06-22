@@ -17,9 +17,28 @@ import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 import UpdateUserForm from "./forms/UpdateUserForm";
 import UserInfo from "./UserInfo";
+import {useTypedSelector} from "../hooks/useTypedSelector";
+import {useActions} from "../hooks/useActions";
+import {useEffect} from "react";
+import {UserActionsTypes} from "../redux/types/userTypes";
 
 const AboutMe = () => {
-    const [open, setOpen] = React.useState(false);
+    const {success, showEditForm} = useTypedSelector(state => state.userUpdate)
+    const {user} = useTypedSelector(state => state.userLogin)
+
+    const {showEditFormOn, showEditFormOff} = useActions()
+
+    console.log("-----show----", success)
+
+
+    useEffect(() => {
+        if (success) {
+            setTimeout(() => {
+                showEditFormOff()
+                window.scrollTo(0, 0)
+            }, 2000)
+        }
+    }, [success])
 
     return (
         <Card >
@@ -32,7 +51,7 @@ const AboutMe = () => {
                 />
                 <Avatar
                     alt="Remy Sharp"
-                    src="https://alexeykrol.com/wp-content/uploads/2018/12/karolyn-fox-foto.1024x1024.jpg"
+                    src={user?.avatar}
                     sx={{ width: 150, height: 150, position: 'absolute', left: 0, right: 0, margin: 'auto',  top: '150px', border: '3px solid white'}}
                 />
             </Box>
@@ -50,7 +69,7 @@ const AboutMe = () => {
                 </Box>
             </CardContent>
             <Box sx={{ width: '100%' }}>
-                <Collapse in={open}>
+                <Collapse in={showEditForm}>
                     <Alert
                         severity='info'
                         action={
@@ -58,9 +77,7 @@ const AboutMe = () => {
                                 aria-label="close"
                                 color="inherit"
                                 size="small"
-                                onClick={() => {
-                                    setOpen(false);
-                                }}
+                                onClick={() => {showEditFormOff()}}
                             >
                                 <CloseIcon fontSize="inherit" />
                             </IconButton>
@@ -73,7 +90,7 @@ const AboutMe = () => {
                 </Collapse>
             </Box>
             <CardActions sx={{justifyContent: 'right'}}>
-                <Button onClick={() => {setOpen(true)}} disabled={open} size="large" startIcon={<EditIcon />}>Edit</Button>
+                <Button onClick={() => {showEditFormOn()}} disabled={showEditForm} size="large" startIcon={<EditIcon />}>Edit</Button>
             </CardActions>
         </Card>
     );

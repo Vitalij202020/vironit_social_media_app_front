@@ -2,6 +2,7 @@ import React, {FormEvent, useState} from 'react';
 import {Button, Container, TextField} from "@mui/material";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import Progress from "./Progress";
+import {useActions} from "../../hooks/useActions";
 
 interface State {
     firstName: string;
@@ -13,13 +14,15 @@ interface State {
 }
 
 const UpdateUserForm = () => {
-    const {error, loading, success} = useTypedSelector(state => state.user)
-    const {user} = useTypedSelector(state => state.auth)
+    const {error, loading, success} = useTypedSelector(state => state.userUpdate)
+    const {user} = useTypedSelector(state => state.userLogin)
+    const {updateUser} = useActions()
+    const [avatar, setAvatar] = useState('')
     const [values, setValues] = useState<State>({
         firstName: user?.firstName || '',
-        lastName: user?.lastName  || '',
-        nickName: user?.nickName  || '',
-        dateOfBirth: user?.dateOfBirth  || '',
+        lastName: user?.lastName || '',
+        nickName: user?.nickName || '',
+        dateOfBirth: user?.dateOfBirth || '',
         email: user?.email || '',
         story: user?.story || '',
     });
@@ -29,10 +32,29 @@ const UpdateUserForm = () => {
         setValues({...values, [prop]: event.target.value});
     };
 
+    // const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault()
+    //     console.log('---info---', values)
+    //     updateUser(values)
+    // }
+
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log('---info---', values)
+        console.log('---avatar---', avatar)
+        const formData = new FormData()
+        formData.append('firstName', values.firstName)
+        formData.append('lastName', values.lastName)
+        formData.append('nickName', values.nickName)
+        formData.append('dateOfBirth', values.dateOfBirth)
+        formData.append('email', values.email)
+        formData.append('story', values.story)
+        formData.append('avatar', avatar)
+
+        // @ts-ignore
+        updateUser(formData)
     }
+
     return (
         <Container maxWidth='xs'>
             <Progress data={{loading, error, success}}/>
@@ -96,6 +118,7 @@ const UpdateUserForm = () => {
                     variant='outlined'
                     InputLabelProps={{shrink: true}}
                     type='file'
+                    onChange={(e: any) => setAvatar(e.target.files[0])}
                 />
                 <Button
                     sx={{mt: 1}}

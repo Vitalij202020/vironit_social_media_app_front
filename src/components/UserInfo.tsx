@@ -6,23 +6,26 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
-function createData(
-    info: string,
-    data: string,
-) {
-    return { info, data };
-}
-
-const rows = [
-    createData('First Name', 'Vitali'),
-    createData('Last Name', 'Vasko'),
-    createData('Nick Name', 'Vital'),
-    createData('Email', 'vitali@test.com'),
-    createData('Date Of Birth', '22-12-2021'),
-];
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
 const UserInfo = () => {
+    const {user} = useTypedSelector(state => state.userLogin)
+
+    const rows = [
+        createData('First Name', user?.firstName || ''),
+        createData('Last Name', user?.lastName || ''),
+        createData('Nick Name', user?.nickName || ''),
+        createData('Email', user?.email || ''),
+        createData('Date Of Birth', user?.dateOfBirth || ''),
+    ];
+
+    function createData(
+        info: string,
+        data: string,
+    ) {
+        return { info, data };
+    }
+
     return (
         <TableContainer elevation={1} sx={{maxWidth: '500px'}} component={Paper}>
             <Table size="small" aria-label="a dense table">

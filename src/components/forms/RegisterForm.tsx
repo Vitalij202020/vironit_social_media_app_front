@@ -9,7 +9,7 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {styled} from "@mui/material/styles";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import * as yup from "yup";
@@ -19,7 +19,7 @@ import {IUserRegister} from "../../redux/types/userTypes";
 import {useActions} from "../../hooks/useActions";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import Progress from "./Progress";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 
 const MyDiv = styled("div")(({theme}) => ({
@@ -59,8 +59,18 @@ const registerSchema = yup.object().shape({
 
 
 const RegisterForm = () => {
-    const {error, loading, success} = useTypedSelector(state => state.auth)
+    const {error, loading, success} = useTypedSelector(state => state.userRegister)
     const {register} = useActions()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (success) {
+                navigate('/login')
+            }
+        }, 2000)
+    }, [success])
+
 
     const {
         control,
@@ -69,7 +79,6 @@ const RegisterForm = () => {
     } = useForm<IUserRegister>({resolver: yupResolver(registerSchema)});
 
     const onSubmit: SubmitHandler<IUserRegister> = (data: IUserRegister) => {
-        console.log("---before---", data);
         register(data)
     };
 

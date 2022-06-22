@@ -7,7 +7,7 @@ interface PropType {
 }
 
 const PrivateRoute: FC<PropType> = ({component: Component}) => {
-    const {user} = useTypedSelector(state => state.auth)
+    const {user} = useTypedSelector(state => state.userLogin)
 
     if (!user) {
         return <Navigate to='/login'/>

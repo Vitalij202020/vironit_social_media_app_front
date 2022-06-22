@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {
     Avatar,
     Button,
@@ -17,7 +17,7 @@ import {IUserLogin} from "../../redux/types/userTypes";
 import {useActions} from "../../hooks/useActions";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import Progress from "./Progress";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 
 const MyDiv = styled("div")(({ theme }) => ({
@@ -42,8 +42,17 @@ const loginSchema = yup.object().shape({
 });
 
 const LoginForm: FC = () => {
-    const {loading, error, success} = useTypedSelector(state => state.auth)
+    const {loading, error, success} = useTypedSelector(state => state.userLogin)
     const {login} = useActions()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (success) {
+                navigate('/')
+            }
+        }, 2000)
+    }, [success])
 
     const {
         control,

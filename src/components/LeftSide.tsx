@@ -12,7 +12,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import {NavLink} from "react-router-dom";
 
 function LeftSide() {
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     const handleListItemClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,

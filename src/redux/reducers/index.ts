@@ -1,10 +1,17 @@
 import {combineReducers} from "redux";
-import auth from './authReducer';
-import user from './authReducer';
+import {IUserLoginState, IUserRegisterState, IUserUpdateState} from "../types/userTypes";
+import {userLoginReducer, userRegisterReducer, userUpdateReducer} from "./userReducer";
 
-export const rootReducer = combineReducers({
-    auth,
-    user
+export interface IAppState {
+    userRegister: IUserRegisterState;
+    userLogin: IUserLoginState;
+    userUpdate: IUserUpdateState;
+}
+
+export const rootReducer = combineReducers<IAppState>({
+    userRegister: userRegisterReducer,
+    userLogin: userLoginReducer,
+    userUpdate: userUpdateReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

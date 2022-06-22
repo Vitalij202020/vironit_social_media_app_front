@@ -5,14 +5,15 @@ import {Alert, AlertTitle, LinearProgress, Slide, Stack} from "@mui/material";
 interface ProgressProps {
     data: {
         loading: boolean;
-        error: null | string;
-        success: null | string;
+        error: string;
+        success: string;
     }
 }
 
 const Progress: FC<ProgressProps> = ({data: {loading, success, error}}) => {
+
     return (
-        <Stack sx={{ width: '100%' }}>
+        <Stack sx={{width: '100%'}}>
             {loading && <LinearProgress sx={{mb: 2}}/>}
             {error &&
                 <Slide direction="left" in={!!error}>
