@@ -6,6 +6,9 @@ import {Container} from "@mui/material";
 import LeftSide from "../components/LeftSide";
 import Header from "../components/Header";
 import {Outlet} from "react-router-dom";
+import RightSide from "../components/RightSide";
+import ShowResult from "../components/ShowResult";
+
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -19,6 +22,7 @@ const MainPage = () => {
     return (
         <>
             <Header/>
+            <ShowResult/>
             <Container maxWidth={"xl"}>
                 <Grid container spacing={2} mt={9}>
                     <Grid item  md={2.5} sx={{display: {xs: 'none', md: 'block'}}}>
@@ -32,8 +36,8 @@ const MainPage = () => {
                         </Item>
                     </Grid>
                     <Grid item  md={2.5} sx={{display: {xs: 'none', md: 'block'}}}>
-                        <Item>Right
-                            Addition Block
+                        <Item>
+                            <RightSide/>
                         </Item>
                     </Grid>
                 </Grid>

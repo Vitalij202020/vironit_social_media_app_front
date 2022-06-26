@@ -1,7 +1,7 @@
 import React from 'react';
 import AboutMe from "./AboutMe";
 import {Divider, Typography} from "@mui/material";
-import PostsList from "./PostsList";
+import PostsList from "./post/PostsList";
 
 const ProfileSection = () => {
     return (

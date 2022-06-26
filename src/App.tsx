@@ -8,14 +8,22 @@ import MainSection from "./components/MainSection";
 import ProfileSection from "./components/ProfileSection";
 import NotFound from "./components/NotFound";
 import PrivateRoute from "./components/hoc/PrivateRoute";
+import TemporaryDrawer from "./components/TestingComponent";
+import {useTypedSelector} from "./hooks/useTypedSelector";
+import {useActions} from "./hooks/useActions";
 
 function App() {
+    // const {token} = useTypedSelector(state => state.userLogin);
+    // const {msg} = useTypedSelector(state => state.global);
+    // const {globalClearFields} = useActions();
+    //
     // useEffect(() => {
-    //     return () => {
-    //         localStorage.removeItem('user')
-    //         localStorage.removeItem('token')
+    //     if(token && !!msg) {
+    //         setTimeout(() => {
+    //             globalClearFields()
+    //         }, 4100)
     //     }
-    // })
+    // }, [token, msg])
 
     return (
         <>
@@ -28,6 +36,7 @@ function App() {
                 <Route path='/register' element={<RegisterPage/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
+            {/*<TemporaryDrawer/>*/}
         </>
     );
 }
