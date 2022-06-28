@@ -31,6 +31,23 @@ export const commentReducer = (state: ICommentState = initialCommentState, actio
                 ...state,
                 commentInput: action.payload,
             }
+        case CommentActionsTypes.COMMENT_DELETE_ONE_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case CommentActionsTypes.COMMENT_DELETE_ONE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                success: action.payload,
+            }
+        case CommentActionsTypes.COMMENT_DELETE_ONE_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            }
         default:
             return state;
     }

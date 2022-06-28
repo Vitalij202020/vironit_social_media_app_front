@@ -1,6 +1,7 @@
 import {GlobalActions, GlobalActionsTypes, IGlobalState} from "../types/globalTypes";
 
 const initialGlobalState: IGlobalState = {
+    flag: false,
     status: false,
     loading: false,
     error: false,
@@ -34,8 +35,14 @@ export const globalReducer = (state: IGlobalState = initialGlobalState, action: 
                 ...state,
                 status: false
             }
+        case GlobalActionsTypes.GLOBAL_SWITCHER:
+            return {
+                ...state,
+                flag: !state.flag
+            }
         case GlobalActionsTypes.GLOBAL_CLEAR_FIELDS:
             return {
+               ...state,
                 status: false,
                 loading: false,
                 error: false,

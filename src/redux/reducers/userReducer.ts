@@ -1,13 +1,16 @@
-import {IUserLoginState, IUserRegisterState, IUserUpdateState, UserActions, UserActionsTypes} from "../types/userTypes";
+import {IUserState, UserActions, UserActionsTypes} from "../types/userTypes";
 
 
-const initialUserRegisterState: IUserRegisterState = {
+const initialUserState: IUserState = {
+    user: null,
     loading: false,
     error: '',
     success: '',
+    token: null,
+    showEditForm: false,
 }
 
-export const userRegisterReducer = (state: IUserRegisterState = initialUserRegisterState, action: UserActions ): IUserRegisterState => {
+export const userReducer = (state: IUserState = initialUserState, action: UserActions ): IUserState => {
     switch (action.type) {
         case UserActionsTypes.USER_REGISTER_REQUEST:
             return {
@@ -18,7 +21,6 @@ export const userRegisterReducer = (state: IUserRegisterState = initialUserRegis
             return {
                 ...state,
                 loading: false,
-                error: '',
                 success: action.payload,
             }
         case UserActionsTypes.USER_REGISTER_FAIL:
@@ -27,21 +29,6 @@ export const userRegisterReducer = (state: IUserRegisterState = initialUserRegis
                 loading: false,
                 error: action.payload
             }
-        default:
-            return state;
-    }
-}
-
-const initialUserLoginState: IUserLoginState = {
-    user: null,
-    loading: false,
-    error: '',
-    success: '',
-    token: null
-}
-
-export const userLoginReducer = (state: IUserLoginState = initialUserLoginState, action: UserActions ): IUserLoginState => {
-    switch (action.type) {
         case UserActionsTypes.USER_LOGIN_REQUEST:
             return {
                 ...state,
@@ -51,7 +38,6 @@ export const userLoginReducer = (state: IUserLoginState = initialUserLoginState,
             return {
                 ...state,
                 loading: false,
-                error: '',
                 user: action.payload.user,
                 success: action.payload.msg,
                 token: action.payload.token
@@ -62,40 +48,6 @@ export const userLoginReducer = (state: IUserLoginState = initialUserLoginState,
                 loading: false,
                 error: action.payload
             }
-        case UserActionsTypes.USER_LOGIN_REFRESH_USER_DATA:
-            return {
-                ...state,
-                user: action.payload,
-            }
-        case UserActionsTypes.USER_LOGOUT:
-            return {
-                ...state,
-                loading: false,
-                error: '',
-                success: '',
-                user: null,
-                token: null
-            }
-        case UserActionsTypes.USER_LOGIN_CLEAR_ERROR_FIELD:
-            return {
-                ...state,
-                error: ''
-            }
-        default:
-            return state;
-    }
-}
-
-const initialUserUpdateState: IUserUpdateState = {
-    user: null,
-    loading: false,
-    error: '',
-    success: '',
-    showEditForm: false,
-}
-
-export const userUpdateReducer = (state: IUserUpdateState = initialUserUpdateState, action: UserActions ): IUserUpdateState => {
-    switch (action.type) {
         case UserActionsTypes.USER_UPDATE_REQUEST:
             return {
                 ...state,
@@ -105,7 +57,6 @@ export const userUpdateReducer = (state: IUserUpdateState = initialUserUpdateSta
             return {
                 ...state,
                 loading: false,
-                error: '',
                 user: action.payload.user,
                 success: action.payload.msg,
             }
@@ -125,15 +76,20 @@ export const userUpdateReducer = (state: IUserUpdateState = initialUserUpdateSta
                 ...state,
                 showEditForm: false
             }
-        case UserActionsTypes.USER_UPDATE_CLEAR_SUCCESS_FIELD:
+        case UserActionsTypes.USER_CLEAR_FIELDS:
             return {
                 ...state,
-                success: ''
-            }
-        case UserActionsTypes.USER_UPDATE_CLEAR_ERROR_FIELD:
-            return {
-                ...state,
+                success: '',
                 error: ''
+            }
+        case UserActionsTypes.USER_LOGOUT:
+            return {
+                ...state,
+                loading: false,
+                error: '',
+                success: '',
+                user: null,
+                token: null
             }
         default:
             return state;

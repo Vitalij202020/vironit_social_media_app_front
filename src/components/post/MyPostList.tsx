@@ -3,15 +3,15 @@ import Post from "./Post";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {Typography} from "@mui/material";
 
-const PostsList = () => {
-    const {posts} = useTypedSelector(state => state.post)
+const MyPostList = () => {
+    const {myPosts} = useTypedSelector(state => state.post)
 
     return (
         <>
             {
-                posts.length
+                myPosts.length
                     ?
-                    posts.map(post => (
+                    myPosts.map(post => (
                         <Post key={post._id} post={post}/>
                     ))
                     :
@@ -21,4 +21,4 @@ const PostsList = () => {
     );
 };
 
-export default PostsList;
+export default MyPostList;

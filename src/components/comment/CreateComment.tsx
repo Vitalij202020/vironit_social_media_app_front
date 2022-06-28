@@ -12,17 +12,18 @@ import {useActions} from "../../hooks/useActions";
 
 interface CreateCommentProps {
     postId: string
+    postUserId: string
 }
 
-const CreateComment: FC<CreateCommentProps> = ({postId}) => {
-    const {user} = useTypedSelector(state => state.userLogin);
+const CreateComment: FC<CreateCommentProps> = ({postId, postUserId}) => {
+    const {user} = useTypedSelector(state => state.user);
     const {commentInput} = useTypedSelector(state => state.comment);
     const {createComment, commentInputOnchange} = useActions();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log('submeet', commentInput)
-        createComment({content: commentInput, postId, postUserId: user?._id as string })
+        createComment({content: commentInput, postId, postUserId })
         commentInputOnchange('')
     }
 

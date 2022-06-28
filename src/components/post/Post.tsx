@@ -15,18 +15,23 @@ import {FC} from "react";
 import {IPost} from "../../redux/types/postTypes";
 import {useActions} from "../../hooks/useActions";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {Box, Divider} from "@mui/material";
 import CommentsList from "../comment/CommentsList";
 import CreateComment from "../comment/CreateComment";
-import Progress from "../forms/Progress";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import UpdatePostForm from "../forms/UpdatePostForm";
 
 interface PostProps {
     post: IPost
 }
 
 const Post: FC<PostProps> = ({post}) => {
-    const {user} = useTypedSelector(state => state.userLogin)
-    const {likePost, unlikePost} = useActions();
+    const [open, setOpen] = React.useState(false);
+    const {user} = useTypedSelector(state => state.user)
+    const {likePost, unlikePost, deletePost, postForUpdate} = useActions();
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const isMenuOpen = Boolean(anchorEl);
 
     function likeHandle() {
         if(post.likes.includes(user?._id)) {
@@ -36,44 +41,97 @@ const Post: FC<PostProps> = ({post}) => {
         }
     }
 
+    const handleClose = () => setOpen(false);
+
+    const onEdit = () => {
+        postForUpdate(post)
+        setAnchorEl(null);
+        setOpen(true)
+    }
+
+    const handlePostMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleDelete = () => {
+        setAnchorEl(null);
+        deletePost(post._id)
+    };
+
+    const menuId = 'primary-post-menu';
+    const renderMenu = (
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+            id={menuId}
+            keepMounted
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+        >
+            <MenuItem onClick={onEdit}>Edit</MenuItem>
+            <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        </Menu>
+    );
+
+
     return (
-        <Card sx={{mb: 2}}>
-            <CardHeader
-                avatar={
-                    <Avatar sx={{bgcolor: red[500]}} aria-label="recipe" src={post.user.avatar}>
-                        R
-                    </Avatar>
-                }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon/>
+        <>
+            <UpdatePostForm open={open} onClose={handleClose}/>
+            <Card sx={{mb: 2}}>
+                <CardHeader
+                    avatar={
+                        <Avatar sx={{bgcolor: red[500]}} aria-label="recipe" src={post.user.avatar}>
+                            R
+                        </Avatar>
+                    }
+                    action={
+                        <IconButton
+                            aria-label="settings"
+                            aria-controls={menuId}
+                            onClick={handlePostMenuOpen}
+                            disabled={post.user._id !== user?._id}
+                        >
+                            <MoreVertIcon/>
+                        </IconButton>
+                    }
+                    title={post.title}
+                    subheader="September 14, 2016"
+                />
+                <CardMedia
+                    component="img"
+                    image={post.image}
+                    alt="Paella dish"
+                />
+                <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                        {post.description}
+                    </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                    <IconButton aria-label="add to favorites" onClick={likeHandle}>
+                        <FavoriteIcon color={post.likes.includes(user?._id) ? 'error' : 'inherit'}/>
                     </IconButton>
-                }
-                title={post.title}
-                subheader="September 14, 2016"
-            />
-            <CardMedia
-                component="img"
-                image={post.image}
-                alt="Paella dish"
-            />
-            <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                    {post.description}
-                </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites" onClick={likeHandle}>
-                    <FavoriteIcon color={post.likes.includes(user?._id) ? 'error' : 'inherit'}/>
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon/>
-                </IconButton>
-            </CardActions>
-            {/*<Divider variant='middle'/>*/}
-            <CommentsList comments={post.comments}/>
-            <CreateComment postId={post._id}/>
-        </Card>
+                    <IconButton aria-label="share">
+                        <ShareIcon/>
+                    </IconButton>
+                </CardActions>
+                {/*<Divider variant='middle'/>*/}
+                <CommentsList comments={post.comments}/>
+                <CreateComment postId={post._id} postUserId={post.user._id}/>
+                {renderMenu}
+            </Card>
+        </>
     );
 };
 

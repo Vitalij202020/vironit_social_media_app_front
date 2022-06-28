@@ -20,12 +20,9 @@ import UserInfo from "./UserInfo";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {useActions} from "../hooks/useActions";
 import {useEffect} from "react";
-import {UserActionsTypes} from "../redux/types/userTypes";
 
 const AboutMe = () => {
-    const {success, showEditForm} = useTypedSelector(state => state.userUpdate)
-    const {user} = useTypedSelector(state => state.userLogin)
-
+    const {success, showEditForm, user} = useTypedSelector(state => state.user)
     const {showEditFormOn, showEditFormOff} = useActions()
 
     console.log("-----show----", success)

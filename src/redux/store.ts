@@ -10,11 +10,12 @@ const token = localStorage.getItem('token')
 const tokenFromLocalStorage = token ? JSON.parse(token) : null
 
 const initialState = {
-    userLogin: {
+    user: {
         user: userFromStorage,
         loading: false,
         error: '',
         success: '',
+        showEditForm: false,
         token: tokenFromLocalStorage
     }
 }

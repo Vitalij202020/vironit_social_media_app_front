@@ -6,17 +6,15 @@ export enum UserActionsTypes {
     USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST',
     USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS',
     USER_LOGIN_FAIL = 'USER_LOGIN_FAIL',
-    USER_LOGIN_REFRESH_USER_DATA = 'USER_LOGIN_REFRESH_USER_DATA',
-    USER_LOGIN_CLEAR_ERROR_FIELD = 'USER_LOGIN_CLEAR_ERROR_FIELD',
-    USER_LOGOUT = 'USER_LOGOUT',
 
     USER_UPDATE_REQUEST = 'USER_UPDATE_REQUEST',
     USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS',
     USER_UPDATE_FAIL = 'USER_UPDATE_FAIL',
     USER_UPDATE_SHOW_FORM_ON = 'USER_UPDATE_SHOW_FORM_ON',
     USER_UPDATE_SHOW_FORM_OFF = 'USER_UPDATE_SHOW_FORM_OFF',
-    USER_UPDATE_CLEAR_SUCCESS_FIELD = 'USER_UPDATE_CLEAR_SUCCESS_FIELD',
-    USER_UPDATE_CLEAR_ERROR_FIELD = 'USER_UPDATE_CLEAR_ERROR_FIELD',
+
+    USER_CLEAR_FIELDS = 'USER_CLEAR_FIELDS',
+    USER_LOGOUT = 'USER_LOGOUT',
 }
 
 export interface IUser {
@@ -30,6 +28,15 @@ export interface IUser {
     email: string;
     password?: string;
     avatar?: string;
+}
+
+export interface IUserState {
+    loading: boolean;
+    error: string;
+    success: string;
+    user: null | IUser;
+    showEditForm: boolean;
+    token: null | string;
 }
 
 export interface IUserRegister {
@@ -97,19 +104,6 @@ interface IUserLoginFail {
     payload: string;
 }
 
-interface IUserLoginRefreshUserData {
-    type: UserActionsTypes.USER_LOGIN_REFRESH_USER_DATA;
-    payload: IUser;
-}
-
-interface IUserClearErrorField {
-    type: UserActionsTypes.USER_LOGIN_CLEAR_ERROR_FIELD;
-}
-
-interface IUserLogout {
-    type: UserActionsTypes.USER_LOGOUT;
-}
-
 interface IUserUpdateRequest {
     type: UserActionsTypes.USER_UPDATE_REQUEST;
 }
@@ -132,12 +126,12 @@ interface IUserUpdateShowFormOff {
     type: UserActionsTypes.USER_UPDATE_SHOW_FORM_OFF;
 }
 
-interface IUserUpdateClearSuccessField {
-    type: UserActionsTypes.USER_UPDATE_CLEAR_SUCCESS_FIELD;
+interface IUserClearFields {
+    type: UserActionsTypes.USER_CLEAR_FIELDS;
 }
 
-interface IUserUpdateClearErrorField {
-    type: UserActionsTypes.USER_UPDATE_CLEAR_ERROR_FIELD;
+interface IUserLogout {
+    type: UserActionsTypes.USER_LOGOUT;
 }
 
 export type UserActions =
@@ -147,35 +141,10 @@ export type UserActions =
     | IUserLoginRequest
     | IUserLoginSuccess
     | IUserLoginFail
-    | IUserLoginRefreshUserData
-    | IUserLogout
     | IUserUpdateRequest
     | IUserUpdateSuccess
     | IUserUpdateFail
     | IUserUpdateShowFormOn
     | IUserUpdateShowFormOff
-    | IUserUpdateClearSuccessField
-    | IUserClearErrorField
-    | IUserUpdateClearErrorField
-
-export interface IUserRegisterState {
-    loading: boolean;
-    error: string;
-    success: string;
-}
-
-export interface IUserLoginState {
-    user: null | IUser;
-    loading: boolean;
-    error: string;
-    success: string;
-    token: null | string;
-}
-
-export interface IUserUpdateState {
-    user: null | IUserUpdate;
-    loading: boolean;
-    error: string;
-    success: string;
-    showEditForm: boolean;
-}
+    | IUserClearFields
+    | IUserLogout

@@ -19,6 +19,8 @@ import {Avatar, Container} from "@mui/material";
 import AdbIcon from '@mui/icons-material/Adb';
 import {useActions} from "../hooks/useActions";
 import {useTypedSelector} from "../hooks/useTypedSelector";
+import LeftSide from "./LeftSide";
+import Drawer from "@mui/material/Drawer";
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -62,7 +64,8 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 
 function Header() {
     const {logout} = useActions();
-    const {user} = useTypedSelector(state => state.userLogin)
+    const {user} = useTypedSelector(state => state.user)
+    const [state, setState] = React.useState(false);
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -93,6 +96,14 @@ function Header() {
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
+    const toggleDrawer = (open: boolean) =>
+        (event: React.KeyboardEvent | React.MouseEvent) => {
+            if (event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
+                return;
+            }
+            setState(open);
+        };
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -170,6 +181,19 @@ function Header() {
 
     return (
         <Box sx={{flexGrow: 1}}>
+            <Drawer
+                open={state}
+                onClose={toggleDrawer(false)}
+            >
+                <Box
+                    sx={{width: 250}}
+                    role="presentation"
+                    onClick={toggleDrawer(false)}
+                    onKeyDown={toggleDrawer(false)}
+                >
+                    <LeftSide/>
+                </Box>
+            </Drawer>
             <AppBar position="fixed">
                 <Container maxWidth={"xl"}>
                     <Toolbar>
@@ -178,7 +202,8 @@ function Header() {
                             edge="start"
                             color="inherit"
                             aria-label="open drawer"
-                            sx={{mr: 2}}
+                            sx={{mr: 2, display: { xs: 'block', md: 'none' }}}
+                            onClick={toggleDrawer(true)}
                         >
                             <MenuIcon/>
                         </IconButton>

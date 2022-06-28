@@ -1,14 +1,17 @@
-import {IPostCreateState, IPostLikeState, IPostListState, PostActions, PostActionsTypes} from "../types/postTypes";
+import {IPostState, PostActions, PostActionsTypes} from "../types/postTypes";
 
-const initialPostCreateState: IPostCreateState = {
+const initialPostState: IPostState = {
     post: null,
     user: null,
+    postForUpdate: null,
     loading: false,
     error: '',
     success: '',
+    posts: [],
+    myPosts: []
 }
 
-export const postCreateReducer = (state: IPostCreateState = initialPostCreateState, action: PostActions ): IPostCreateState => {
+export const postReducer = (state: IPostState = initialPostState, action: PostActions ): IPostState => {
     switch (action.type) {
         case PostActionsTypes.POST_CREATE_REQUEST:
             return {
@@ -21,7 +24,6 @@ export const postCreateReducer = (state: IPostCreateState = initialPostCreateSta
                 post: action.payload.post,
                 user: action.payload.user,
                 loading: false,
-                error: '',
                 success: action.payload.msg,
             }
         case PostActionsTypes.POST_CREATE_FAIL:
@@ -30,29 +32,52 @@ export const postCreateReducer = (state: IPostCreateState = initialPostCreateSta
                 loading: false,
                 error: action.payload
             }
-        case PostActionsTypes.POST_CREATE_CLEAR_SUCCESS_FIELD:
+        case PostActionsTypes.POST_UPDATE_REQUEST:
             return {
                 ...state,
-                success: ''
+                loading: true
             }
-        case PostActionsTypes.POST_CREATE_CLEAR_ERROR_FIELD:
+        case PostActionsTypes.POST_UPDATE_SUCCESS:
             return {
                 ...state,
+                post: action.payload.post,
+                loading: false,
+                success: action.payload.msg,
+            }
+        case PostActionsTypes.POST_UPDATE_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        case PostActionsTypes.POST_FOR_UPDATE:
+            return {
+                ...state,
+                postForUpdate: action.payload
+            }
+        case PostActionsTypes.POST_DELETE_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case PostActionsTypes.POST_DELETE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                success: action.payload,
+            }
+        case PostActionsTypes.POST_DELETE_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        case PostActionsTypes.POST_CLEAR_FIELDS:
+            return {
+                ...state,
+                success: '',
                 error: ''
             }
-        default:
-            return state;
-    }
-}
-
-const initialPostListState: IPostListState = {
-    posts: [],
-    loading: false,
-    error: '',
-}
-
-export const postListReducer = (state: IPostListState = initialPostListState, action: PostActions ): IPostListState => {
-    switch (action.type) {
         case PostActionsTypes.POST_LIST_REQUEST:
             return {
                 ...state,
@@ -71,82 +96,53 @@ export const postListReducer = (state: IPostListState = initialPostListState, ac
                 loading: false,
                 error: action.payload
             }
-        default:
-            return state;
-    }
-}
-
-const initialPostLikeState: IPostLikeState = {
-    info: false,
-    loading: false,
-    error: false,
-    success: false,
-    msg: ''
-}
-
-export const postLikeReducer = (state: IPostLikeState = initialPostLikeState, action: PostActions): IPostLikeState => {
-    switch (action.type) {
+        case PostActionsTypes.MY_POST_LIST_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case PostActionsTypes.MY_POST_LIST_SUCCESS:
+            return {
+                ...state,
+                myPosts: action.payload,
+                loading: false,
+                error: '',
+            }
+        case PostActionsTypes.MY_POST_LIST_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
         case PostActionsTypes.POST_LIKE_REQUEST:
             return {
                 ...state,
-                success: false,
-                error: false,
                 loading: true
             }
         case PostActionsTypes.POST_LIKE_SUCCESS:
             return {
                 ...state,
-                success: true,
                 loading: false,
-                msg: action.payload
             }
         case PostActionsTypes.POST_LIKE_FAIL:
             return {
                 ...state,
                 loading: false,
-                error: true,
-                msg: action.payload
-            }
-        case PostActionsTypes.POST_LIKE_SHOW_INFO_ON:
-            return {
-                ...state,
-                info: true
-            }
-        case PostActionsTypes.POST_LIKE_SHOW_INFO_OFF:
-            return {
-                ...state,
-                info: false
             }
         case PostActionsTypes.POST_UNLIKE_REQUEST:
             return {
                 ...state,
-                success: false,
-                error: false,
                 loading: true
             }
         case PostActionsTypes.POST_UNLIKE_SUCCESS:
             return {
                 ...state,
-                success: true,
                 loading: false,
-                msg: action.payload
             }
         case PostActionsTypes.POST_UNLIKE_FAIL:
             return {
                 ...state,
                 loading: false,
-                error: true,
-                msg: action.payload
-            }
-        case PostActionsTypes.POST_UNLIKE_SHOW_INFO_ON:
-            return {
-                ...state,
-                info: true
-            }
-        case PostActionsTypes.POST_UNLIKE_SHOW_INFO_OFF:
-            return {
-                ...state,
-                info: false
             }
         default:
             return state;

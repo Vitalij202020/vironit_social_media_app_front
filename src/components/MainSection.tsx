@@ -5,9 +5,8 @@ import {useActions} from "../hooks/useActions";
 import CreatePost from "./post/CreatePost";
 
 const MainSection = () => {
-    const {user, token} = useTypedSelector(state => state.userLogin);
-    const {postLike, comment} = useTypedSelector(state => state);
-    const {post} = useTypedSelector(state => state.postCreate);
+    const {token} = useTypedSelector(state => state.user);
+    const {flag} = useTypedSelector(state => state.global);
 
     const {getAllPosts} = useActions();
 
@@ -15,7 +14,8 @@ const MainSection = () => {
         if(token) {
             getAllPosts()
         }
-    }, [token, postLike.success, comment.success, post])
+    }, [token, flag])
+
     return (
         <>
             <CreatePost/>

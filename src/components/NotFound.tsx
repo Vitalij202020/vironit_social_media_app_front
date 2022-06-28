@@ -23,6 +23,7 @@ const NotFound = () => {
                     alignItems: 'center',
                     m: 8
                 }}>
+                    <Typography variant="h1">404</Typography>
                     <Typography variant="h4">Sorry Page Not Found!</Typography>
                     <Button sx={{mt: 2}} onClick={() => navigate('/')}>Go To Home</Button>
                 </Box>

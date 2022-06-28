@@ -59,7 +59,7 @@ const registerSchema = yup.object().shape({
 
 
 const RegisterForm = () => {
-    const {error, loading, success} = useTypedSelector(state => state.userRegister)
+    const {error, loading, success} = useTypedSelector(state => state.user)
     const {register} = useActions()
     const navigate = useNavigate()
 
@@ -68,7 +68,7 @@ const RegisterForm = () => {
             if (success) {
                 navigate('/login')
             }
-        }, 2000)
+        }, 2500)
     }, [success])
 
 

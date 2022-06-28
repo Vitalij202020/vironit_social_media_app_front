@@ -19,13 +19,11 @@ const CommentsList: FC<CommentsListProps> = ({comments}) => {
                 maxHeight: '370px',
                 overflowY: comments.length > 5 ? 'scroll' : ''
             }}>
-
                 <Stack spacing={1}>
                     {comments.map(comment => (
                         <Comment key={comment._id} comment={comment}/>
                     ))}
                 </Stack>
-
             </Box>
         </Container>
     );

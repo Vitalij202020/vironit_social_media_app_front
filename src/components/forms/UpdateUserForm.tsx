@@ -14,8 +14,7 @@ interface State {
 }
 
 const UpdateUserForm = () => {
-    const {error, loading, success} = useTypedSelector(state => state.userUpdate)
-    const {user} = useTypedSelector(state => state.userLogin)
+    const {error, loading, success, user} = useTypedSelector(state => state.user)
     const {updateUser} = useActions()
     const [avatar, setAvatar] = useState('')
     const [values, setValues] = useState<State>({
@@ -31,12 +30,6 @@ const UpdateUserForm = () => {
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({...values, [prop]: event.target.value});
     };
-
-    // const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault()
-    //     console.log('---info---', values)
-    //     updateUser(values)
-    // }
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()

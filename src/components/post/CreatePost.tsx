@@ -8,7 +8,7 @@ import {useActions} from "../../hooks/useActions";
 import Progress from "../forms/Progress";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 
-const style = {
+export const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
@@ -22,7 +22,6 @@ const style = {
 };
 
 const CreatePost = () => {
-    const {error, loading, success} = useTypedSelector(state => state.postCreate)
     const [open, setOpen] = React.useState(false);
     const [title, setTitle] = React.useState('');
     const [description, setDescription] = React.useState('');
@@ -43,7 +42,9 @@ const CreatePost = () => {
         formData.append('image', image)
         // @ts-ignore
         createPost(formData)
-        // setOpen(false)
+        setOpen(false)
+        setTitle('')
+        setDescription('')
     }
 
     return (
@@ -69,7 +70,7 @@ const CreatePost = () => {
                         <Typography align='center' variant="h6" component="h2" sx={{color: '#616161'}}>
                             Please Fill This Form
                         </Typography>
-                        <Progress data={{loading, error, success}}/>
+                        {/*<Progress data={{loading, error, success}}/>*/}
                         <form noValidate autoComplete="off" onSubmit={(e) => onSubmit(e)}>
                             <TextField
                                 margin='dense'

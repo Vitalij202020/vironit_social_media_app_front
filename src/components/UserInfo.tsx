@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import {useTypedSelector} from "../hooks/useTypedSelector";
 
 const UserInfo = () => {
-    const {user} = useTypedSelector(state => state.userLogin)
+    const {user} = useTypedSelector(state => state.user)
 
     const rows = [
         createData('First Name', user?.firstName || ''),

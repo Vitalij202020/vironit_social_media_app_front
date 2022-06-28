@@ -42,7 +42,7 @@ const loginSchema = yup.object().shape({
 });
 
 const LoginForm: FC = () => {
-    const {loading, error, success} = useTypedSelector(state => state.userLogin)
+    const {loading, error, success} = useTypedSelector(state => state.user)
     const {login} = useActions()
     const navigate = useNavigate()
 
@@ -51,7 +51,7 @@ const LoginForm: FC = () => {
             if (success) {
                 navigate('/')
             }
-        }, 2000)
+        }, 2500)
     }, [success])
 
     const {

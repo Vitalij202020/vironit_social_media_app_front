@@ -4,24 +4,33 @@ export enum PostActionsTypes {
     POST_CREATE_REQUEST = 'POST_CREATE_REQUEST',
     POST_CREATE_SUCCESS = 'POST_CREATE_SUCCESS',
     POST_CREATE_FAIL = 'POST_CREATE_FAIL',
-    POST_CREATE_CLEAR_SUCCESS_FIELD = 'POST_CREATE_CLEAR_SUCCESS_FIELD',
-    POST_CREATE_CLEAR_ERROR_FIELD = 'POST_CREATE_CLEAR_ERROR_FIELD',
+
+    POST_UPDATE_REQUEST = 'POST_UPDATE_REQUEST',
+    POST_UPDATE_SUCCESS = 'POST_UPDATE_SUCCESS',
+    POST_UPDATE_FAIL = 'POST_UPDATE_FAIL',
+    POST_FOR_UPDATE = 'POST_FOR_UPDATE',
+
+    POST_DELETE_REQUEST = 'POST_DELETE_REQUEST',
+    POST_DELETE_SUCCESS = 'POST_DELETE_SUCCESS',
+    POST_DELETE_FAIL = 'POST_DELETE_FAIL',
 
     POST_LIST_REQUEST = 'POST_LIST_REQUEST',
     POST_LIST_SUCCESS = 'POST_LIST_SUCCESS',
     POST_LIST_FAIL = 'POST_LIST_FAIL',
 
+    MY_POST_LIST_REQUEST = 'MY_POST_LIST_REQUEST',
+    MY_POST_LIST_SUCCESS = 'MY_POST_LIST_SUCCESS',
+    MY_POST_LIST_FAIL = 'MY_POST_LIST_FAIL',
+
     POST_LIKE_REQUEST = 'POST_LIKE_REQUEST',
     POST_LIKE_SUCCESS = 'POST_LIKE_SUCCESS',
     POST_LIKE_FAIL = 'POST_LIKE_FAIL',
-    POST_LIKE_SHOW_INFO_ON = 'POST_LIKE_SHOW_INFO_ON',
-    POST_LIKE_SHOW_INFO_OFF = 'POST_LIKE_SHOW_INFO_OFF',
 
     POST_UNLIKE_REQUEST = 'POST_UNLIKE_REQUEST',
     POST_UNLIKE_SUCCESS = 'POST_UNLIKE_SUCCESS',
     POST_UNLIKE_FAIL = 'POST_UNLIKE_FAIL',
-    POST_UNLIKE_SHOW_INFO_ON = 'POST_UNLIKE_SHOW_INFO_ON',
-    POST_UNLIKE_SHOW_INFO_OFF = 'POST_UNLIKE_SHOW_INFO_OFF'
+
+    POST_CLEAR_FIELDS = 'POST_CLEAR_FIELDS',
 }
 
 export interface IPost {
@@ -40,10 +49,33 @@ export interface IPostCreate {
     image: string;
 }
 
+export interface IPostUpdate {
+    _id: string;
+    title: string;
+    description: string;
+    image: string;
+}
+
 export interface IPostCreateResponse {
     post: IPost;
     user: IUser;
     msg: string;
+}
+
+export interface IPostUpdateResponse {
+    post: IPost;
+    msg: string;
+}
+
+export interface IPostState {
+    post: IPost | null;
+    myPosts: IPost[];
+    user: IUser | null;
+    posts: IPost[];
+    postForUpdate: IPost | null;
+    loading: boolean;
+    error: string;
+    success: string;
 }
 
 interface IPostCreateRequest {
@@ -57,6 +89,39 @@ interface IPostCreateSuccess {
 
 interface IPostCreateFail {
     type: PostActionsTypes.POST_CREATE_FAIL;
+    payload: string;
+}
+
+interface IPostUpdateRequest {
+    type: PostActionsTypes.POST_UPDATE_REQUEST;
+}
+
+interface IPostUpdateSuccess {
+    type: PostActionsTypes.POST_UPDATE_SUCCESS;
+    payload: IPostUpdateResponse;
+}
+
+interface IPostUpdateFail {
+    type: PostActionsTypes.POST_UPDATE_FAIL;
+    payload: string;
+}
+
+interface IPostForUpdate {
+    type: PostActionsTypes.POST_FOR_UPDATE;
+    payload: IPost;
+}
+
+interface IPostDeleteRequest {
+    type: PostActionsTypes.POST_DELETE_REQUEST;
+}
+
+interface IPostDeleteSuccess {
+    type: PostActionsTypes.POST_DELETE_SUCCESS;
+    payload: string;
+}
+
+interface IPostDeleteFail {
+    type: PostActionsTypes.POST_DELETE_FAIL;
     payload: string;
 }
 
@@ -74,6 +139,20 @@ interface IPostListFail {
     payload: string;
 }
 
+interface IPostMyListRequest {
+    type: PostActionsTypes.MY_POST_LIST_REQUEST;
+}
+
+interface IPostMyListSuccess {
+    type: PostActionsTypes.MY_POST_LIST_SUCCESS;
+    payload: IPost[];
+}
+
+interface IPostMyListFail {
+    type: PostActionsTypes.MY_POST_LIST_FAIL;
+    payload: string;
+}
+
 interface IPostLikeRequest {
     type: PostActionsTypes.POST_LIKE_REQUEST;
 }
@@ -86,14 +165,6 @@ interface IPostLikeSuccess {
 interface IPostLikeFail {
     type: PostActionsTypes.POST_LIKE_FAIL;
     payload: string;
-}
-
-interface IPostLikeShowInfoOn {
-    type: PostActionsTypes.POST_LIKE_SHOW_INFO_ON;
-}
-
-interface IPostLikeShowInfoOff {
-    type: PostActionsTypes.POST_LIKE_SHOW_INFO_OFF;
 }
 
 interface IPostUnlikeRequest {
@@ -110,61 +181,32 @@ interface IPostUnlikeFail {
     payload: string;
 }
 
-interface IPostUnlikeShowInfoOn {
-    type: PostActionsTypes.POST_UNLIKE_SHOW_INFO_ON;
+interface IPostClearFields {
+    type: PostActionsTypes.POST_CLEAR_FIELDS;
 }
 
-interface IPostUnlikeShowInfoOff {
-    type: PostActionsTypes.POST_UNLIKE_SHOW_INFO_OFF;
-}
-
-interface IPostCreateClearSuccessField {
-    type: PostActionsTypes.POST_CREATE_CLEAR_SUCCESS_FIELD;
-}
-
-interface IPostCreateClearErrorField {
-    type: PostActionsTypes.POST_CREATE_CLEAR_ERROR_FIELD;
-}
 
 export type PostActions =
     IPostCreateRequest
     | IPostCreateSuccess
     | IPostCreateFail
+    | IPostUpdateRequest
+    | IPostUpdateSuccess
+    | IPostUpdateFail
+    | IPostForUpdate
+    | IPostDeleteRequest
+    | IPostDeleteSuccess
+    | IPostDeleteFail
     | IPostListRequest
     | IPostListSuccess
     | IPostListFail
+    | IPostMyListRequest
+    | IPostMyListSuccess
+    | IPostMyListFail
     | IPostLikeRequest
     | IPostLikeSuccess
     | IPostLikeFail
-    | IPostLikeShowInfoOn
-    | IPostLikeShowInfoOff
     | IPostUnlikeRequest
     | IPostUnlikeSuccess
     | IPostUnlikeFail
-    | IPostUnlikeShowInfoOn
-    | IPostUnlikeShowInfoOff
-    | IPostCreateClearSuccessField
-    | IPostCreateClearErrorField
-
-
-export interface IPostCreateState {
-    post: IPost | null;
-    user: IUser | null;
-    loading: boolean;
-    error: string;
-    success: string;
-}
-
-export interface IPostListState {
-    posts: IPost[];
-    loading: boolean;
-    error: string;
-}
-
-export interface IPostLikeState {
-    info: boolean;
-    loading: boolean;
-    error: boolean;
-    success: boolean;
-    msg: string;
-}
+    | IPostClearFields
