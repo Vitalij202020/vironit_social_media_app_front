@@ -1,6 +1,7 @@
 import {IPostState, PostActions, PostActionsTypes} from "../types/postTypes";
 
 const initialPostState: IPostState = {
+    userPosts: [],
     post: null,
     user: null,
     postForUpdate: null,
@@ -95,6 +96,11 @@ export const postReducer = (state: IPostState = initialPostState, action: PostAc
                 ...state,
                 loading: false,
                 error: action.payload
+            }
+        case PostActionsTypes.POST_GET_USER_POSTS:
+            return {
+                ...state,
+                userPosts: action.payload,
             }
         case PostActionsTypes.MY_POST_LIST_REQUEST:
             return {

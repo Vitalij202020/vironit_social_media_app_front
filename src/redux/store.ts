@@ -12,6 +12,7 @@ const tokenFromLocalStorage = token ? JSON.parse(token) : null
 const initialState = {
     user: {
         user: userFromStorage,
+        users: [],
         loading: false,
         error: '',
         success: '',

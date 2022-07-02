@@ -7,7 +7,7 @@ import MyPostList from "./post/MyPostList";
 
 const ProfileSection = () => {
     const {token} = useTypedSelector(state => state.user);
-    const {flag} = useTypedSelector(state => state.global);
+    const {postFlag} = useTypedSelector(state => state.global);
 
     const {getAllMyPosts}= useActions();
 
@@ -15,7 +15,7 @@ const ProfileSection = () => {
         if(token) {
             getAllMyPosts()
         }
-    }, [token, flag])
+    }, [token, postFlag])
 
     return (
         <>

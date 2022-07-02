@@ -16,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 import UpdateUserForm from "./forms/UpdateUserForm";
-import UserInfo from "./UserInfo";
+import MyInfo from "./MyInfo";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {useActions} from "../hooks/useActions";
 import {useEffect} from "react";
@@ -24,9 +24,6 @@ import {useEffect} from "react";
 const AboutMe = () => {
     const {success, showEditForm, user} = useTypedSelector(state => state.user)
     const {showEditFormOn, showEditFormOff} = useActions()
-
-    console.log("-----show----", success)
-
 
     useEffect(() => {
         if (success) {
@@ -62,7 +59,7 @@ const AboutMe = () => {
                 </Typography>
                 <Divider sx={{m: 2}}>More Info</Divider>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <UserInfo/>
+                    <MyInfo/>
                 </Box>
             </CardContent>
             <Box sx={{ width: '100%' }}>

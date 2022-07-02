@@ -1,7 +1,8 @@
 import {IUserLogin, IUserRegister, IUserUpdate, UserActions, UserActionsTypes} from "../types/userTypes";
 import {Dispatch} from "redux";
-import {patch, post} from "../../services/fetchData";
+import {patch, post, get} from "../../services/fetchData";
 import {errorHandler} from "../../utils/errorHandler";
+import {GlobalActions, GlobalActionsTypes} from "../types/globalTypes";
 
 export const register = (user: IUserRegister) => async (dispatch: Dispatch<UserActions>) => {
     try {
@@ -47,7 +48,6 @@ export const updateUser = (user: IUserUpdate) => async (dispatch: Dispatch<UserA
             dispatch({type: UserActionsTypes.USER_CLEAR_FIELDS})
         }, 3000)
     } catch (error: any) {
-        console.log("---error---", error)
         dispatch({type: UserActionsTypes.USER_UPDATE_FAIL, payload: errorHandler(error)})
         setTimeout(() => {
             dispatch({type: UserActionsTypes.USER_CLEAR_FIELDS})
@@ -56,7 +56,6 @@ export const updateUser = (user: IUserUpdate) => async (dispatch: Dispatch<UserA
 }
 
 export const logout = () => async (dispatch: Dispatch<UserActions>) => {
-    console.log('Logout - Action')
     localStorage.removeItem('user')
     localStorage.removeItem('token')
     dispatch({type: UserActionsTypes.USER_UPDATE_SHOW_FORM_OFF})
@@ -71,23 +70,17 @@ export const showEditFormOff = () => async (dispatch: Dispatch<UserActions>) => 
     dispatch({type: UserActionsTypes.USER_UPDATE_SHOW_FORM_OFF})
 }
 
-// export const refreshUserData = (id: string) => async (dispatch: Dispatch<AuthAction>) => {
-//     try {
-//         dispatch({type: AuthActionsTypes.AUTH_REQUEST})
-//         const {data} = await get(`/user/${id}`)
-//         console.log("---register--data---", data.user)
-//         dispatch({type: AuthActionsTypes.AUTH_REFRESH_USER_SUCCESS, payload: data.user})
-//     } catch (error: any) {
-//         console.log("---error---", error)
-//         dispatch({
-//             type: AuthActionsTypes.AUTH_ERROR,
-//             payload:
-//                 error.response && error.response.data.msg
-//                     ? error.response.data.msg
-//                     : error.message
-//         })
-//     }
-// }
+export const getAllUsers = () => async (dispatch: Dispatch<UserActions | GlobalActions>) => {
+    try {
+        dispatch({type: UserActionsTypes.USER_GET_ALL_USERS_REQUEST})
+        const {data} = await get('/users')
+        dispatch({type: UserActionsTypes.USER_GET_ALL_USERS_SUCCESS, payload: data})
+    } catch (error: any) {
+        dispatch({type: UserActionsTypes.USER_UPDATE_FAIL, payload: errorHandler(error)})
+        dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR, payload: errorHandler(error)})
+        dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
+    }
+}
 
 // export const getUserById = (id: string) => async (dispatch: Dispatch<UserAction>) => {
 //     try {

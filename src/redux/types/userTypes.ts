@@ -3,6 +3,10 @@ export enum UserActionsTypes {
     USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS',
     USER_REGISTER_FAIL = 'USER_REGISTER_FAIL',
 
+    USER_GET_ALL_USERS_REQUEST = 'USER_GET_ALL_USERS_REQUEST',
+    USER_GET_ALL_USERS_SUCCESS = 'USER_GET_ALL_USERS_SUCCESS',
+    USER_GET_ALL_USERS_FAIL = 'USER_GET_ALL_USERS_FAIL',
+
     USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST',
     USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS',
     USER_LOGIN_FAIL = 'USER_LOGIN_FAIL',
@@ -35,6 +39,7 @@ export interface IUserState {
     error: string;
     success: string;
     user: null | IUser;
+    users: IUser[];
     showEditForm: boolean;
     token: null | string;
 }
@@ -90,6 +95,19 @@ interface IUserRegisterFail {
     payload: string;
 }
 
+interface IUserGetAllUsersRequest {
+    type: UserActionsTypes.USER_GET_ALL_USERS_REQUEST;
+}
+
+interface IUserGetAllUsersSuccess {
+    type: UserActionsTypes.USER_GET_ALL_USERS_SUCCESS;
+    payload: IUser[];
+}
+
+interface IUserGetAllUsersFail {
+    type: UserActionsTypes.USER_GET_ALL_USERS_FAIL;
+}
+
 interface IUserLoginRequest {
     type: UserActionsTypes.USER_LOGIN_REQUEST;
 }
@@ -138,6 +156,9 @@ export type UserActions =
     IUserRegisterRequest
     | IUserRegisterSuccess
     | IUserRegisterFail
+    | IUserGetAllUsersRequest
+    | IUserGetAllUsersSuccess
+    | IUserGetAllUsersFail
     | IUserLoginRequest
     | IUserLoginSuccess
     | IUserLoginFail

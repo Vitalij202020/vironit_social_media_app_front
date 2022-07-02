@@ -11,7 +11,7 @@ export const createPost = (newPost: IPostCreate) => async (dispatch: Dispatch<Po
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_SUCCESS, payload: data.msg})
         dispatch({type: PostActionsTypes.POST_CREATE_SUCCESS, payload: data})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
-        dispatch({type: GlobalActionsTypes.GLOBAL_SWITCHER})
+        dispatch({type: GlobalActionsTypes.GLOBAL_POST_FLAG})
     } catch (error: any) {
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR, payload: errorHandler(error)})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
@@ -25,7 +25,7 @@ export const updatePost = (newPost: IPostUpdate) => async (dispatch: Dispatch<Po
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_SUCCESS, payload: data.msg})
         dispatch({type: PostActionsTypes.POST_UPDATE_SUCCESS, payload: data})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
-        dispatch({type: GlobalActionsTypes.GLOBAL_SWITCHER})
+        dispatch({type: GlobalActionsTypes.GLOBAL_POST_FLAG})
     } catch (error: any) {
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR, payload: errorHandler(error)})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
@@ -52,6 +52,16 @@ export const getAllMyPosts = () => async (dispatch: Dispatch<PostActions>) => {
     }
 }
 
+export const getAllUserPosts = (id: string) => async (dispatch: Dispatch<PostActions | GlobalActions>) => {
+    try {
+        const {data} = await get(`/post/user/${id}`)
+        dispatch({type: PostActionsTypes.POST_GET_USER_POSTS, payload: data})
+    } catch (error: any) {
+        dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR, payload: errorHandler(error)})
+        dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
+    }
+}
+
 export const likePost = (id: string) => async (dispatch: Dispatch<PostActions | GlobalActions>) => {
     try {
         dispatch({type: PostActionsTypes.POST_LIKE_REQUEST})
@@ -59,7 +69,7 @@ export const likePost = (id: string) => async (dispatch: Dispatch<PostActions | 
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_SUCCESS, payload: data.msg})
         dispatch({type: PostActionsTypes.POST_LIKE_SUCCESS, payload: data.msg})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
-        dispatch({type: GlobalActionsTypes.GLOBAL_SWITCHER})
+        dispatch({type: GlobalActionsTypes.GLOBAL_POST_FLAG})
     } catch (error: any) {
         const err = error.response && error.response.data.msg ? error.response.data.msg : error.message;
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR, payload: err})
@@ -74,7 +84,7 @@ export const unlikePost = (id: string) => async (dispatch: Dispatch<PostActions 
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_SUCCESS, payload: data.msg})
         dispatch({type: PostActionsTypes.POST_UNLIKE_SUCCESS, payload: data.msg})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
-        dispatch({type: GlobalActionsTypes.GLOBAL_SWITCHER})
+        dispatch({type: GlobalActionsTypes.GLOBAL_POST_FLAG})
     } catch (error: any) {
         const err = error.response && error.response.data.msg ? error.response.data.msg : error.message;
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR, payload: err})
@@ -88,7 +98,7 @@ export const deletePost = (id: string) => async (dispatch: Dispatch<PostActions 
         const {data} = await deleteOne(`/post/${id}`)
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_SUCCESS, payload: data.msg})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
-        dispatch({type: GlobalActionsTypes.GLOBAL_SWITCHER})
+        dispatch({type: GlobalActionsTypes.GLOBAL_POST_FLAG})
     } catch (error: any) {
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR, payload: errorHandler(error)})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})

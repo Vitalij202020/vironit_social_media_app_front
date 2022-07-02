@@ -8,6 +8,9 @@ import Header from "../components/Header";
 import {Outlet} from "react-router-dom";
 import RightSide from "../components/RightSide";
 import ShowResult from "../components/ShowResult";
+import {useTypedSelector} from "../hooks/useTypedSelector";
+import {useActions} from "../hooks/useActions";
+import {useEffect} from "react";
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -19,6 +22,18 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const MainPage = () => {
+    const {user} = useTypedSelector(state => state.user)
+    const {token} = useTypedSelector(state => state.user);
+    const {getAllUsers, getSentFriendRequests, getFriendsRequest} = useActions();
+
+    useEffect(() => {
+        if(token) {
+            getAllUsers()
+            getFriendsRequest(user?._id as string)
+            getSentFriendRequests()
+        }
+    }, [token])
+
     return (
         <>
             <Header/>

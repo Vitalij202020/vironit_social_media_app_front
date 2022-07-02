@@ -71,18 +71,22 @@ function LeftSide() {
             </List>
             <Divider/>
             <List component="nav" aria-label="secondary mailbox folder">
-                <ListItemButton
-                    selected={selectedIndex === 4}
-                    onClick={(event) => handleListItemClick(event, 4)}
-                >
-                    <ListItemText primary="Item"/>
-                </ListItemButton>
-                <ListItemButton
-                    selected={selectedIndex === 5}
-                    onClick={(event) => handleListItemClick(event, 5)}
-                >
-                    <ListItemText primary="Item"/>
-                </ListItemButton>
+                <NavLink to="/users">
+                    <ListItemButton
+                        selected={selectedIndex === 4}
+                        onClick={(event) => handleListItemClick(event, 4)}
+                    >
+                        <ListItemText primary="Users"/>
+                    </ListItemButton>
+                </NavLink>
+                <NavLink to="/friends">
+                    <ListItemButton
+                        selected={selectedIndex === 5}
+                        onClick={(event) => handleListItemClick(event, 5)}
+                    >
+                        <ListItemText primary="Friends"/>
+                    </ListItemButton>
+                </NavLink>
             </List>
         </Box>
     );

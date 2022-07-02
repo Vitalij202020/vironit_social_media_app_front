@@ -6,14 +6,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {IUser} from "../redux/types/userTypes";
-import {FC} from "react";
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
-interface UserInfoProps {
-    user: IUser;
-}
-
-const UserInfo: FC<UserInfoProps> = ({user}) => {
+const MyInfo = () => {
+    const {user} = useTypedSelector(state => state.user)
 
     const rows = [
         createData('First Name', user?.firstName || ''),
@@ -57,4 +53,4 @@ const UserInfo: FC<UserInfoProps> = ({user}) => {
     );
 }
 
-export default UserInfo;
+export default MyInfo;

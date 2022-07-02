@@ -5,8 +5,22 @@ export enum GlobalActionsTypes {
     GLOBAL_SHOW_MESSAGE_SUCCESS = 'GLOBAL_SHOW_MESSAGE_SUCCESS',
     GLOBAL_SHOW_MESSAGE_ERROR = 'GLOBAL_SHOW_MESSAGE_ERROR',
 
+    GLOBAL_POST_FLAG = 'GLOBAL_POST_FLAG',
+    GLOBAL_USER_FLAG = 'GLOBAL_USER_FLAG',
+    GLOBAL_NOTIFICATION_FLAG = 'GLOBAL_NOTIFICATION_FLAG',
+
     GLOBAL_CLEAR_FIELDS = 'GLOBAL_CLEAR_FIELDS',
-    GLOBAL_SWITCHER = 'GLOBAL_SWITCHER'
+}
+
+export interface IGlobalState {
+    notificationFlag: boolean;
+    userFlag: boolean;
+    postFlag: boolean;
+    status: boolean;
+    loading: boolean;
+    error: boolean;
+    success: boolean;
+    msg: string;
 }
 
 interface IGlobalShowMessageSuccess {
@@ -31,8 +45,16 @@ interface IGlobalClearFields {
     type: GlobalActionsTypes.GLOBAL_CLEAR_FIELDS;
 }
 
-interface IGlobalSwitcher {
-    type: GlobalActionsTypes.GLOBAL_SWITCHER;
+interface IGlobalPostFlag {
+    type: GlobalActionsTypes.GLOBAL_POST_FLAG;
+}
+
+interface IGlobalUserFlag {
+    type: GlobalActionsTypes.GLOBAL_USER_FLAG;
+}
+
+interface IGlobalNotificationFlag {
+    type: GlobalActionsTypes.GLOBAL_NOTIFICATION_FLAG;
 }
 
 export type GlobalActions =
@@ -41,14 +63,6 @@ export type GlobalActions =
     | IGlobalShowStatusOn
     | IGlobalShowStatusOff
     | IGlobalClearFields
-    | IGlobalSwitcher
-
-
-export interface IGlobalState {
-    flag: boolean;
-    status: boolean;
-    loading: boolean;
-    error: boolean;
-    success: boolean;
-    msg: string;
-}
+    | IGlobalPostFlag
+    | IGlobalUserFlag
+    | IGlobalNotificationFlag

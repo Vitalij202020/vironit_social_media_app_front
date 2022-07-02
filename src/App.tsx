@@ -8,6 +8,9 @@ import MainSection from "./components/MainSection";
 import ProfileSection from "./components/ProfileSection";
 import NotFound from "./components/NotFound";
 import PrivateRoute from "./components/hoc/PrivateRoute";
+import UsersList from "./components/user/UsersList";
+import NotificationList from "./components/Notification/NotificationList";
+import ProfileUserSection from "./components/ProfileUserSection";
 
 
 function App() {
@@ -17,6 +20,9 @@ function App() {
                 <Route path='/' element={<PrivateRoute component={MainPage}/>}>
                     <Route path='/' element={<MainSection/>}/>
                     <Route path='/profile' element={<ProfileSection/>}/>
+                    <Route path='/users' element={<UsersList/>}/>
+                    <Route path='/users/:userId' element={<ProfileUserSection/>}/>
+                    <Route path='/notifications' element={<NotificationList/>}/>
                 </Route>
                 <Route path='/login' element={<LoginPage/>}/>
                 <Route path='/register' element={<RegisterPage/>}/>

@@ -31,6 +31,7 @@ export enum PostActionsTypes {
     POST_UNLIKE_FAIL = 'POST_UNLIKE_FAIL',
 
     POST_CLEAR_FIELDS = 'POST_CLEAR_FIELDS',
+    POST_GET_USER_POSTS = 'POST_GET_USER_POSTS',
 }
 
 export interface IPost {
@@ -68,6 +69,7 @@ export interface IPostUpdateResponse {
 }
 
 export interface IPostState {
+    userPosts: IPost[];
     post: IPost | null;
     myPosts: IPost[];
     user: IUser | null;
@@ -148,6 +150,11 @@ interface IPostMyListSuccess {
     payload: IPost[];
 }
 
+interface IPostGetUserPosts {
+    type: PostActionsTypes.POST_GET_USER_POSTS;
+    payload: IPost[];
+}
+
 interface IPostMyListFail {
     type: PostActionsTypes.MY_POST_LIST_FAIL;
     payload: string;
@@ -210,3 +217,4 @@ export type PostActions =
     | IPostUnlikeSuccess
     | IPostUnlikeFail
     | IPostClearFields
+    | IPostGetUserPosts

@@ -11,7 +11,7 @@ export const createComment = (newComment: ICommentCreate) => async (dispatch: Di
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_SUCCESS, payload: data.msg})
         dispatch({type: CommentActionsTypes.COMMENT_CREATE_SUCCESS, payload: data.msg})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
-        dispatch({type: GlobalActionsTypes.GLOBAL_SWITCHER})
+        dispatch({type: GlobalActionsTypes.GLOBAL_POST_FLAG})
     } catch (error: any) {
         dispatch({type: CommentActionsTypes.COMMENT_CREATE_FAIL, payload: errorHandler(error)})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR, payload: errorHandler(error)})
@@ -26,7 +26,7 @@ export const deleteComment = (id: string) => async (dispatch: Dispatch<CommentAc
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_SUCCESS, payload: data.msg})
         dispatch({type: CommentActionsTypes.COMMENT_DELETE_ONE_SUCCESS, payload: data.msg})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
-        dispatch({type: GlobalActionsTypes.GLOBAL_SWITCHER})
+        dispatch({type: GlobalActionsTypes.GLOBAL_POST_FLAG})
     } catch (error: any) {
         dispatch({type: CommentActionsTypes.COMMENT_DELETE_ONE_FAIL, payload: errorHandler(error)})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR, payload: errorHandler(error)})

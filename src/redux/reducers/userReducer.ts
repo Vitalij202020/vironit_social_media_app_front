@@ -3,6 +3,7 @@ import {IUserState, UserActions, UserActionsTypes} from "../types/userTypes";
 
 const initialUserState: IUserState = {
     user: null,
+    users: [],
     loading: false,
     error: '',
     success: '',
@@ -28,6 +29,22 @@ export const userReducer = (state: IUserState = initialUserState, action: UserAc
                 ...state,
                 loading: false,
                 error: action.payload
+            }
+        case UserActionsTypes.USER_GET_ALL_USERS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case UserActionsTypes.USER_GET_ALL_USERS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                users: action.payload
+            }
+        case UserActionsTypes.USER_GET_ALL_USERS_FAIL:
+            return {
+                ...state,
+                loading: false,
             }
         case UserActionsTypes.USER_LOGIN_REQUEST:
             return {

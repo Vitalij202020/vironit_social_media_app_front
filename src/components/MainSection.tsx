@@ -5,16 +5,23 @@ import {useActions} from "../hooks/useActions";
 import CreatePost from "./post/CreatePost";
 
 const MainSection = () => {
-    const {token} = useTypedSelector(state => state.user);
-    const {flag} = useTypedSelector(state => state.global);
+    const {token, user} = useTypedSelector(state => state.user);
+    const {postFlag, notificationFlag} = useTypedSelector(state => state.global);
 
-    const {getAllPosts} = useActions();
+    const {getAllPosts, getNotifications, getFriendsRequest} = useActions();
+
+    useEffect(() => {
+        if(token) {
+            getNotifications()
+            getFriendsRequest(user?._id as string)
+        }
+    }, [token, notificationFlag])
 
     useEffect(() => {
         if(token) {
             getAllPosts()
         }
-    }, [token, flag])
+    }, [token, postFlag])
 
     return (
         <>

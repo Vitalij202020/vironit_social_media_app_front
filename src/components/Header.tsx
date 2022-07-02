@@ -21,6 +21,7 @@ import {useActions} from "../hooks/useActions";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import LeftSide from "./LeftSide";
 import Drawer from "@mui/material/Drawer";
+import {useNavigate} from "react-router-dom";
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -65,7 +66,9 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 function Header() {
     const {logout} = useActions();
     const {user} = useTypedSelector(state => state.user)
+    const {notifications} = useTypedSelector(state => state.notification)
     const [state, setState] = React.useState(false);
+    let navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -84,7 +87,6 @@ function Header() {
     const onLogout = () => {
         setAnchorEl(null);
         handleMobileMenuClose();
-        console.log('--- Logout ---')
         logout()
     };
 
@@ -146,7 +148,7 @@ function Header() {
         >
             <MenuItem>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
+                    <Badge badgeContent={0} color="error">
                         <MailIcon/>
                     </Badge>
                 </IconButton>
@@ -158,7 +160,7 @@ function Header() {
                     aria-label="show 17 new notifications"
                     color="inherit"
                 >
-                    <Badge badgeContent={17} color="error">
+                    <Badge badgeContent={notifications.length} color="error">
                         <NotificationsIcon/>
                     </Badge>
                 </IconButton>
@@ -237,7 +239,7 @@ function Header() {
                         <Box sx={{flexGrow: 1}}/>
                         <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                                <Badge badgeContent={4} color="error">
+                                <Badge badgeContent={0} color="error">
                                     <MailIcon/>
                                 </Badge>
                             </IconButton>
@@ -245,8 +247,9 @@ function Header() {
                                 size="large"
                                 aria-label="show 17 new notifications"
                                 color="inherit"
+                                onClick={() => navigate('/notifications')}
                             >
-                                <Badge badgeContent={17} color="error">
+                                <Badge badgeContent={notifications.length} color="error">
                                     <NotificationsIcon/>
                                 </Badge>
                             </IconButton>
