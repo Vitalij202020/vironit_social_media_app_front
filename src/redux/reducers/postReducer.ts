@@ -9,7 +9,7 @@ const initialPostState: IPostState = {
     error: '',
     success: '',
     posts: [],
-    myPosts: []
+    myPosts: [],
 }
 
 export const postReducer = (state: IPostState = initialPostState, action: PostActions ): IPostState => {

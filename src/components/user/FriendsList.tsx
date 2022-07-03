@@ -4,14 +4,14 @@ import User from "./User";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {useActions} from "../../hooks/useActions";
 
-const UsersList = () => {
-    const {token, users, user} = useTypedSelector(state => state.user)
+const FriendsList = () => {
+    const {friends} = useTypedSelector(state => state.friendship)
+    const {token, user} = useTypedSelector(state => state.user);
     const {userFlag, notificationFlag} = useTypedSelector(state => state.global);
-    const {getAllUsers, getSentFriendRequests, getFriendsRequest, getNotifications} = useActions();
+    const {getSentFriendRequests, getFriendsRequest, getNotifications} = useActions();
 
     useEffect(() => {
         if(token) {
-            getAllUsers()
             getFriendsRequest(user?._id as string)
             getSentFriendRequests()
             getNotifications()
@@ -21,13 +21,13 @@ const UsersList = () => {
     return (
         <>
             {
-                !users.length && <Typography variant='h5' align='center' m={5}>No Users Yet</Typography>
+                !friends.length && <Typography variant='h5' align='center' m={5}>No Friends Yet</Typography>
             }
             <Grid container spacing={3} justifyContent={"center"} alignItems={"center"}>
                 {
-                    users.length
+                    friends.length
                         ?
-                        users.map(user => (
+                        friends.map(user => (
                             <User key={user._id} user={user}/>
                         ))
                         :
@@ -38,4 +38,4 @@ const UsersList = () => {
     );
 };
 
-export default UsersList;
+export default FriendsList;

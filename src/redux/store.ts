@@ -13,6 +13,7 @@ const initialState = {
     user: {
         user: userFromStorage,
         users: [],
+        searchResult: [],
         loading: false,
         error: '',
         success: '',

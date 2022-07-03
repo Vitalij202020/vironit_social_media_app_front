@@ -10,6 +10,10 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ChatIcon from '@mui/icons-material/Chat';
 import PersonIcon from '@mui/icons-material/Person';
 import {NavLink} from "react-router-dom";
+import PeopleIcon from '@mui/icons-material/People';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import {ListItem, Switch} from "@mui/material";
+import {ModeNight} from "@mui/icons-material";
 
 function LeftSide() {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -76,6 +80,9 @@ function LeftSide() {
                         selected={selectedIndex === 4}
                         onClick={(event) => handleListItemClick(event, 4)}
                     >
+                        <ListItemIcon>
+                            <PeopleIcon/>
+                        </ListItemIcon>
                         <ListItemText primary="Users"/>
                     </ListItemButton>
                 </NavLink>
@@ -84,9 +91,21 @@ function LeftSide() {
                         selected={selectedIndex === 5}
                         onClick={(event) => handleListItemClick(event, 5)}
                     >
+                        <ListItemIcon>
+                            <EmojiPeopleIcon/>
+                        </ListItemIcon>
                         <ListItemText primary="Friends"/>
                     </ListItemButton>
                 </NavLink>
+                <Divider sx={{m: '10px 0 20px 0'}}/>
+                <ListItem disablePadding>
+                    <ListItemButton component="a" href="#simple-list">
+                        <ListItemIcon>
+                            <ModeNight />
+                        </ListItemIcon>
+                        <Switch />
+                    </ListItemButton>
+                </ListItem>
             </List>
         </Box>
     );

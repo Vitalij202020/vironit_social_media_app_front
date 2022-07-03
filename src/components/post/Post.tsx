@@ -20,6 +20,7 @@ import CreateComment from "../comment/CreateComment";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import UpdatePostForm from "../forms/UpdatePostForm";
+import moment from "moment";
 
 interface PostProps {
     post: IPost
@@ -106,7 +107,7 @@ const Post: FC<PostProps> = ({post}) => {
                         </IconButton>
                     }
                     title={post.title}
-                    subheader="September 14, 2016"
+                    subheader={moment(post.createdAt).fromNow()}
                 />
                 <CardMedia
                     component="img"

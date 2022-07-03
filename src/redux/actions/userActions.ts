@@ -3,6 +3,7 @@ import {Dispatch} from "redux";
 import {patch, post, get} from "../../services/fetchData";
 import {errorHandler} from "../../utils/errorHandler";
 import {GlobalActions, GlobalActionsTypes} from "../types/globalTypes";
+import {CommentActionsTypes} from "../types/commentTypes";
 
 export const register = (user: IUserRegister) => async (dispatch: Dispatch<UserActions>) => {
     try {
@@ -82,23 +83,12 @@ export const getAllUsers = () => async (dispatch: Dispatch<UserActions | GlobalA
     }
 }
 
-// export const getUserById = (id: string) => async (dispatch: Dispatch<UserAction>) => {
-//     try {
-//         dispatch({type: UserActionsTypes.USER_FETCH_REQUEST})
-//         const {data} = await patch('/user', )
-//         console.log("---update--data---", data.msg)
-//         dispatch({type: UserActionsTypes.USER_UPDATE_SUCCESS, payload: data})
-//     } catch (error: any) {
-//         console.log("---error---", error)
-//         dispatch({
-//             type: UserActionsTypes.USER_FETCH_ERROR,
-//             payload:
-//                 error.response && error.response.data.msg
-//                     ? error.response.data.msg
-//                     : error.message
-//         })
-//         setTimeout(() => {
-//             dispatch({type: UserActionsTypes.USER_FETCH_ERROR, payload: ''})
-//         }, 4000)
-//     }
-// }
+export const getAllUsersSearch = (name: string) => async (dispatch: Dispatch<UserActions | GlobalActions>) => {
+    try {
+        const {data} = await get(`/users/search?name=${name}`)
+        dispatch({type: UserActionsTypes.USER_GET_ALL_USERS_SEARCH, payload: data})
+    } catch (error: any) {
+        dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR, payload: errorHandler(error)})
+        dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
+    }
+}

@@ -11,6 +11,8 @@ import PrivateRoute from "./components/hoc/PrivateRoute";
 import UsersList from "./components/user/UsersList";
 import NotificationList from "./components/Notification/NotificationList";
 import ProfileUserSection from "./components/ProfileUserSection";
+import SearchUsersList from "./components/user/SearchUserList";
+import FriendsList from "./components/user/FriendsList";
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
                     <Route path='/' element={<MainSection/>}/>
                     <Route path='/profile' element={<ProfileSection/>}/>
                     <Route path='/users' element={<UsersList/>}/>
+                    <Route path='/friends' element={<FriendsList/>}/>
+                    <Route path='/users/search' element={<SearchUsersList/>}/>
                     <Route path='/users/:userId' element={<ProfileUserSection/>}/>
                     <Route path='/notifications' element={<NotificationList/>}/>
                 </Route>

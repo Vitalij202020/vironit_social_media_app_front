@@ -6,6 +6,7 @@ export enum UserActionsTypes {
     USER_GET_ALL_USERS_REQUEST = 'USER_GET_ALL_USERS_REQUEST',
     USER_GET_ALL_USERS_SUCCESS = 'USER_GET_ALL_USERS_SUCCESS',
     USER_GET_ALL_USERS_FAIL = 'USER_GET_ALL_USERS_FAIL',
+    USER_GET_ALL_USERS_SEARCH = 'USER_GET_ALL_USERS_SEARCH',
 
     USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST',
     USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS',
@@ -40,6 +41,7 @@ export interface IUserState {
     success: string;
     user: null | IUser;
     users: IUser[];
+    searchResult: IUser[],
     showEditForm: boolean;
     token: null | string;
 }
@@ -101,6 +103,11 @@ interface IUserGetAllUsersRequest {
 
 interface IUserGetAllUsersSuccess {
     type: UserActionsTypes.USER_GET_ALL_USERS_SUCCESS;
+    payload: IUser[];
+}
+
+interface IUserGetAllUsersSearch {
+    type: UserActionsTypes.USER_GET_ALL_USERS_SEARCH;
     payload: IUser[];
 }
 
@@ -169,3 +176,4 @@ export type UserActions =
     | IUserUpdateShowFormOff
     | IUserClearFields
     | IUserLogout
+    | IUserGetAllUsersSearch

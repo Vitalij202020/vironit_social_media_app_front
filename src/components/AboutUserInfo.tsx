@@ -34,11 +34,10 @@ const AboutUserInfo = () => {
             </Box>
             <CardContent sx={{mt: 2}}>
                 <Typography mt={2} align='center' gutterBottom variant="h5" component="div">
-                    Lizard
+                    {user.nickName}
                 </Typography>
                 <Typography align='center' variant="body2" color="text.secondary">
-                    "Lizards are a widespread group of squamate reptiles, with over 6,000
-                    species, ranging across all continents except Antarctica"
+                    {user.story}
                 </Typography>
                 <Divider sx={{m: 2}}>More Info</Divider>
                 <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

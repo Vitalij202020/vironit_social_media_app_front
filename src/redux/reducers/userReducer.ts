@@ -4,6 +4,7 @@ import {IUserState, UserActions, UserActionsTypes} from "../types/userTypes";
 const initialUserState: IUserState = {
     user: null,
     users: [],
+    searchResult: [],
     loading: false,
     error: '',
     success: '',
@@ -40,6 +41,12 @@ export const userReducer = (state: IUserState = initialUserState, action: UserAc
                 ...state,
                 loading: false,
                 users: action.payload
+            }
+        case UserActionsTypes.USER_GET_ALL_USERS_SEARCH:
+            return {
+                ...state,
+                loading: false,
+                searchResult: action.payload
             }
         case UserActionsTypes.USER_GET_ALL_USERS_FAIL:
             return {
@@ -101,12 +108,14 @@ export const userReducer = (state: IUserState = initialUserState, action: UserAc
             }
         case UserActionsTypes.USER_LOGOUT:
             return {
-                ...state,
+                user: null,
+                users: [],
+                searchResult: [],
                 loading: false,
                 error: '',
                 success: '',
-                user: null,
-                token: null
+                token: null,
+                showEditForm: false,
             }
         default:
             return state;

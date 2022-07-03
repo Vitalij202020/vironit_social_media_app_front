@@ -22,6 +22,7 @@ import {useTypedSelector} from "../hooks/useTypedSelector";
 import LeftSide from "./LeftSide";
 import Drawer from "@mui/material/Drawer";
 import {useNavigate} from "react-router-dom";
+import {FormEvent, useState} from "react";
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -64,10 +65,11 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 function Header() {
-    const {logout} = useActions();
+    const [search, setSearch] = useState('');
     const {user} = useTypedSelector(state => state.user)
     const {notifications} = useTypedSelector(state => state.notification)
     const [state, setState] = React.useState(false);
+    const {logout, getAllUsersSearch} = useActions();
     let navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -98,6 +100,13 @@ function Header() {
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
+    const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        getAllUsersSearch(search)
+        setSearch('')
+        navigate('users/search')
+    }
 
     const toggleDrawer = (open: boolean) =>
         (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -231,10 +240,14 @@ function Header() {
                             <SearchIconWrapper>
                                 <SearchIcon/>
                             </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{'aria-label': 'search'}}
-                            />
+                            <form noValidate autoComplete="off" onSubmit={(e) => onSubmitHandler(e)}>
+                                <StyledInputBase
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    value={search}
+                                    placeholder="Search…"
+                                    inputProps={{'aria-label': 'search'}}
+                                />
+                            </form>
                         </Search>
                         <Box sx={{flexGrow: 1}}/>
                         <Box sx={{display: {xs: 'none', md: 'flex'}}}>

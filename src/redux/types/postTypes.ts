@@ -42,6 +42,7 @@ export interface IPost {
     likes: any[];
     comments: any[];
     user: IUser;
+    createdAt: string;
 }
 
 export interface IPostCreate {
