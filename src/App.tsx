@@ -13,6 +13,7 @@ import NotificationList from "./components/Notification/NotificationList";
 import ProfileUserSection from "./components/ProfileUserSection";
 import SearchUsersList from "./components/user/SearchUserList";
 import FriendsList from "./components/user/FriendsList";
+import ChatPage from "./pages/ChatPage";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                     <Route path='/users/:userId' element={<ProfileUserSection/>}/>
                     <Route path='/notifications' element={<NotificationList/>}/>
                 </Route>
+                <Route path='/chat' element={<PrivateRoute component={ChatPage}/>}/>
                 <Route path='/login' element={<LoginPage/>}/>
                 <Route path='/register' element={<RegisterPage/>}/>
                 <Route path="*" element={<NotFound/>}/>

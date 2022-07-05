@@ -4,6 +4,7 @@ import {IComment} from "../../redux/types/commentTypes";
 import CloseIcon from '@mui/icons-material/Close';
 import {useActions} from "../../hooks/useActions";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
+import moment from "moment";
 
 interface CommentProps {
     comment: IComment
@@ -26,9 +27,7 @@ const Comment: FC<CommentProps> = ({comment}) => {
                             <p style={{ textAlign: "left" }}>
                                 {comment.content}
                             </p>
-                            {/*<p style={{ textAlign: "left", color: "gray" }}>*/}
-                            {/*    posted 1 minute ago*/}
-                            {/*</p>*/}
+                            <p style={{ textAlign: "left", color: "gray" }}>{moment(comment.createdAt).fromNow()}</p>
                         </Box>
                         {
                             user?._id === comment.user._id

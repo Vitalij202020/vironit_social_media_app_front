@@ -18,6 +18,7 @@ export interface IComment {
     user: IUser;
     postId: string;
     postUserId: string;
+    createdAt: string;
 }
 
 export interface ICommentCreate {
