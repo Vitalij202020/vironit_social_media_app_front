@@ -25,7 +25,6 @@ const UpdateUserForm = () => {
         email: user?.email || '',
         story: user?.story || '',
     });
-    console.log("---onChange---", values.firstName)
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({...values, [prop]: event.target.value});
@@ -33,8 +32,6 @@ const UpdateUserForm = () => {
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log('---info---', values)
-        console.log('---avatar---', avatar)
         const formData = new FormData()
         formData.append('firstName', values.firstName)
         formData.append('lastName', values.lastName)

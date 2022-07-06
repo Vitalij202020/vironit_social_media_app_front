@@ -23,6 +23,11 @@ export const messageReducer = (state: IMessageState = initialMessageState, actio
                 ...state,
                 currentMessage: action.payload
             }
+        case MessageActionsTypes.MESSAGE_SET_CURRENT_RESET:
+            return {
+                ...state,
+                currentMessage: null
+            }
         case MessageActionsTypes.MESSAGE_SET_RECIPIENT:
             return {
                 ...state,

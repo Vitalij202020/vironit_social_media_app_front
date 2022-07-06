@@ -10,6 +10,7 @@ export enum GlobalActionsTypes {
     GLOBAL_POST_FLAG = 'GLOBAL_POST_FLAG',
     GLOBAL_USER_FLAG = 'GLOBAL_USER_FLAG',
     GLOBAL_NOTIFICATION_FLAG = 'GLOBAL_NOTIFICATION_FLAG',
+    GLOBAL_MESSAGE_FLAG = 'GLOBAL_MESSAGE_FLAG',
 
     GLOBAL_CLEAR_FIELDS = 'GLOBAL_CLEAR_FIELDS',
     GLOBAL_SOCKET = 'GLOBAL_SOCKET'
@@ -25,6 +26,7 @@ export interface IGlobalState {
     success: boolean;
     msg: string;
     socketIo: any;
+    messageFlag: boolean;
 }
 
 interface IGlobalShowMessageSuccess {
@@ -62,6 +64,10 @@ interface IGlobalUserFlag {
     type: GlobalActionsTypes.GLOBAL_USER_FLAG;
 }
 
+interface IGlobalMessageFlag {
+    type: GlobalActionsTypes.GLOBAL_MESSAGE_FLAG;
+}
+
 interface IGlobalNotificationFlag {
     type: GlobalActionsTypes.GLOBAL_NOTIFICATION_FLAG;
 }
@@ -76,3 +82,4 @@ export type GlobalActions =
     | IGlobalUserFlag
     | IGlobalNotificationFlag
     | IGlobalSocket
+    | IGlobalMessageFlag

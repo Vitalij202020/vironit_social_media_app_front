@@ -34,8 +34,6 @@ const CreatePost = () => {
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log('---title---', title)
-        console.log('---image---', image)
         const formData = new FormData()
         formData.append('title', title)
         formData.append('description', description)
@@ -92,7 +90,7 @@ const CreatePost = () => {
 
                             />
                             <TextField
-                                label='Profile Avatar'
+                                label='Post Image'
                                 margin='dense'
                                 fullWidth
                                 variant='outlined'

@@ -168,6 +168,7 @@ function Header() {
                     size="large"
                     aria-label="show 17 new notifications"
                     color="inherit"
+                    onClick={() => navigate('/notifications')}
                 >
                     <Badge badgeContent={notifications.length} color="error">
                         <NotificationsIcon/>

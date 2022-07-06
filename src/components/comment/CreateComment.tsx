@@ -22,7 +22,6 @@ const CreateComment: FC<CreateCommentProps> = ({postId, postUserId}) => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log('submeet', commentInput)
         createComment({content: commentInput, postId, postUserId })
         commentInputOnchange('')
     }

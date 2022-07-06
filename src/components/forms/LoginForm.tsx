@@ -61,7 +61,6 @@ const LoginForm: FC = () => {
     } = useForm<IUserLogin>({resolver: yupResolver(loginSchema)});
 
     const onSubmit: SubmitHandler<IUserLogin> = (data: IUserLogin) => {
-        console.log(data);
         login(data)
     };
 

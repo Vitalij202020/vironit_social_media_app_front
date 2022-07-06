@@ -14,6 +14,10 @@ export const createMessage = (newMessage: IMessageCreate) => async (dispatch: Di
         dispatch({type: MessageActionsTypes.MESSAGE_ADD, payload: answer.data})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_SUCCESS, payload: response.data.msg})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
+        // setTimeout(() => {
+        //     dispatch({type: MessageActionsTypes.MESSAGE_SET_CURRENT_RESET})
+        // }, 1000)
+
     } catch (error: any) {
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR, payload: errorHandler(error)})
         dispatch({type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_ON})
@@ -48,3 +52,7 @@ export const messageSetRecipient = (item: IUser): MessageActions => {
 export const messageAdd = (message: IMessage): MessageActions => {
     return {type: MessageActionsTypes.MESSAGE_ADD, payload: message}
 }
+
+// export const messageSerCurrentMessageReset = (): MessageActions => {
+//     return {type: MessageActionsTypes.MESSAGE_SET_CURRENT_RESET}
+// }

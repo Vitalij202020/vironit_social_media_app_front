@@ -38,7 +38,7 @@ const MessagesBlock = () => {
                 messageAdd(message)
             }
         );
-    }, [currentMessage]);
+    }, []);
 
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()

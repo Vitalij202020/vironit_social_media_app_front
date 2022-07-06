@@ -9,6 +9,10 @@ export const globalClearFields = (): GlobalActions => {
     return {type: GlobalActionsTypes.GLOBAL_CLEAR_FIELDS}
 }
 
+export const globalMessageFlag = (): GlobalActions => {
+    return {type: GlobalActionsTypes.GLOBAL_MESSAGE_FLAG}
+}
+
 export const globalSocket = (socketIo: Socket): GlobalActions => {
     return {type: GlobalActionsTypes.GLOBAL_SOCKET, payload: socketIo}
 }

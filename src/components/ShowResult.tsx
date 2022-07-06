@@ -15,7 +15,6 @@ export default function ShowResult() {
     const {success, error, msg, status} = useTypedSelector(state => state.global);
 
     const {globalShowStatusActionOff, globalClearFields} = useActions();
-    console.log('---showResult---', status)
 
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {

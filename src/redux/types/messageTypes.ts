@@ -5,7 +5,8 @@ export enum MessageActionsTypes {
     MESSAGE_GET = 'MESSAGE_GET',
     MESSAGE_DELETE = 'MESSAGE_DELETE',
     MESSAGE_SET_RECIPIENT = 'MESSAGE_SET_RECIPIENT',
-    MESSAGE_SET_CURRENT = 'MESSAGE_SET_CURRENT'
+    MESSAGE_SET_CURRENT = 'MESSAGE_SET_CURRENT',
+    MESSAGE_SET_CURRENT_RESET = 'MESSAGE_SET_CURRENT_RESET',
 }
 
 export interface IMessage {
@@ -54,9 +55,14 @@ interface IMessageDelete {
     payload: string;
 }
 
+interface IMessageSetCurrentMessageReset {
+    type: MessageActionsTypes.MESSAGE_SET_CURRENT_RESET;
+}
+
 export type MessageActions =
     IMessageAdd
     | IMessageGet
     | IMessageDelete
     | IMessageSetRecipient
     | IMessageSetCurrentMessage
+    | IMessageSetCurrentMessageReset

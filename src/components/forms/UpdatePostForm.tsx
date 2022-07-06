@@ -20,12 +20,10 @@ const UpdatePostForm: FC<UpdatePostFormProps> = ({open, onClose}) => {
     const {updatePost} = useActions();
 
     useEffect(() => {
-        console.log('------------render ----useEffect------>>>')
         setTitle(postForUpdate?.title || '')
         setDescription(postForUpdate?.description || '')
     }, [postForUpdate])
 
-    console.log("UpdatePostForm -> ", title, description)
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const formData = new FormData()
