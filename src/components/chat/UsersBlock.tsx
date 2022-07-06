@@ -16,13 +16,12 @@ import {useTypedSelector} from "../../hooks/useTypedSelector";
 const UsersBlock = () => {
     const {searchResult} = useTypedSelector(state => state.user)
     const [search, setSearch] = useState('');
-    const {getAllUsersSearch, getMessages} = useActions();
+    const {getAllUsersSearch, getMessages, messageSetRecipient} = useActions();
 
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         getAllUsersSearch(search)
         setSearch('')
-        console.log('working....', search)
     }
 
     return (
@@ -42,7 +41,10 @@ const UsersBlock = () => {
             {
                 searchResult.map(user => (
                     <Box key={user._id}>
-                        <CardActionArea onClick={() => getMessages(user._id)}>
+                        <CardActionArea onClick={() => {
+                            getMessages(user._id)
+                            messageSetRecipient(user)
+                        }}>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar alt="Friend"

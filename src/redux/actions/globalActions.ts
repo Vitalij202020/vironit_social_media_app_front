@@ -1,4 +1,5 @@
 import {GlobalActions, GlobalActionsTypes} from "../types/globalTypes";
+import {Socket} from "socket.io-client";
 
 export const globalShowStatusActionOff = (): GlobalActions => {
     return {type: GlobalActionsTypes.GLOBAL_SHOW_STATUS_OFF}
@@ -6,4 +7,8 @@ export const globalShowStatusActionOff = (): GlobalActions => {
 
 export const globalClearFields = (): GlobalActions => {
     return {type: GlobalActionsTypes.GLOBAL_CLEAR_FIELDS}
+}
+
+export const globalSocket = (socketIo: Socket): GlobalActions => {
+    return {type: GlobalActionsTypes.GLOBAL_SOCKET, payload: socketIo}
 }

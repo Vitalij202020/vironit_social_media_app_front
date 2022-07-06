@@ -1,9 +1,11 @@
 import {IUser} from "./userTypes";
 
 export enum MessageActionsTypes {
-    // MESSAGE_CREATE = 'MESSAGE_CREATE',
+    MESSAGE_ADD = 'MESSAGE_ADD',
     MESSAGE_GET = 'MESSAGE_GET',
     MESSAGE_DELETE = 'MESSAGE_DELETE',
+    MESSAGE_SET_RECIPIENT = 'MESSAGE_SET_RECIPIENT',
+    MESSAGE_SET_CURRENT = 'MESSAGE_SET_CURRENT'
 }
 
 export interface IMessage {
@@ -23,16 +25,28 @@ export interface IMessageCreate {
 
 export interface IMessageState {
     messages: IMessage[];
+    recipient?: IUser;
+    currentMessage: IMessage | null;
 }
 
-// interface IMessageCreate {
-//     type: MessageActionsTypes.MESSAGE_CREATE;
-//     payload: string;
-// }
+interface IMessageAdd {
+    type: MessageActionsTypes.MESSAGE_ADD;
+    payload: IMessage;
+}
 
 interface IMessageGet {
     type: MessageActionsTypes.MESSAGE_GET;
     payload: IMessage[];
+}
+
+interface IMessageSetCurrentMessage {
+    type: MessageActionsTypes.MESSAGE_SET_CURRENT;
+    payload: IMessage;
+}
+
+interface IMessageSetRecipient {
+    type: MessageActionsTypes.MESSAGE_SET_RECIPIENT;
+    payload: IUser;
 }
 
 interface IMessageDelete {
@@ -41,6 +55,8 @@ interface IMessageDelete {
 }
 
 export type MessageActions =
-    // IMessageCreate
+    IMessageAdd
     | IMessageGet
     | IMessageDelete
+    | IMessageSetRecipient
+    | IMessageSetCurrentMessage

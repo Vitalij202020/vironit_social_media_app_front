@@ -8,7 +8,8 @@ const initialGlobalState: IGlobalState = {
     loading: false,
     error: false,
     success: false,
-    msg: ''
+    msg: '',
+    socketIo: []
 }
 
 export const globalReducer = (state: IGlobalState = initialGlobalState, action: GlobalActions): IGlobalState => {
@@ -51,6 +52,11 @@ export const globalReducer = (state: IGlobalState = initialGlobalState, action: 
             return {
                 ...state,
                 userFlag: !state.userFlag
+            }
+        case GlobalActionsTypes.GLOBAL_SOCKET:
+            return {
+                ...state,
+                socketIo: action.payload
             }
         case GlobalActionsTypes.GLOBAL_CLEAR_FIELDS:
             return {

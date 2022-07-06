@@ -1,11 +1,8 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import Header from "../components/Header";
 import ShowResult from "../components/ShowResult";
 import {Container} from "@mui/material";
 import Grid from "@mui/material/Grid";
-import LeftSide from "../components/LeftSide";
-import {Outlet} from "react-router-dom";
-import RightSide from "../components/RightSide";
 import {styled} from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import UsersBlock from "../components/chat/UsersBlock";

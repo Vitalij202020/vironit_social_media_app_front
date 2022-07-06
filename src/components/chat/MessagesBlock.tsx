@@ -1,23 +1,53 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Avatar, Box, Button, TextField, Typography} from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import moment from "moment";
 import {useActions} from "../../hooks/useActions";
+import {io} from "socket.io-client";
+import {IMessage} from "../../redux/types/messageTypes";
+import { v4 as uuidv4 } from 'uuid';
 
 const MessagesBlock = () => {
     const [text, setText] = useState('');
-    const {messages} = useTypedSelector(state => state.message);
+    const {messages, recipient, currentMessage} = useTypedSelector(state => state.message);
     const {user} = useTypedSelector(state => state.user);
-    const {createMessage} = useActions();
+    const {createMessage, messageAdd} = useActions();
+    const socket = useRef<any>();
+
+    // Connect to Socket.io
+    useEffect(() => {
+        socket.current = io("ws://localhost:8800");
+        socket.current.emit("addUser", user?._id);
+        socket.current.on("getUsers", (users: any) => {
+            console.log('usersOnline--->>>', users)
+        });
+    }, [user]);
+
+    // Send Message to socket server
+    useEffect(() => {
+        if (currentMessage !== null) {
+            socket.current.emit("sendMessage", currentMessage);
+        }
+    }, [currentMessage]);
+
+
+    // Get the message from socket server
+    useEffect(() => {
+        socket.current.on("receiveMessage", (message: IMessage) => {
+                messageAdd(message)
+            }
+        );
+    }, [currentMessage]);
 
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        createMessage({
+        const newMessage = {
             sender: user?._id as string,
-            recipient: messages[0].recipient._id === user?._id ? messages[0].sender._id : messages[0].recipient._id,
+            recipient: recipient?._id as string,
             message: text
-        })
+        }
+        createMessage(newMessage)
         setText('')
     }
 
@@ -34,7 +64,7 @@ const MessagesBlock = () => {
                 {
                     !!messages.length && messages.map(message => (
                         <Box
-                            key={message._id}
+                            key={uuidv4()}
                             sx={{display: 'flex',
                                 flexDirection: 'column',
                                 mt: '20px',

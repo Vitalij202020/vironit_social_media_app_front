@@ -1,3 +1,5 @@
+import {Socket} from "socket.io-client";
+
 export enum GlobalActionsTypes {
     GLOBAL_SHOW_STATUS_ON = 'GLOBAL_SHOW_STATUS_ON',
     GLOBAL_SHOW_STATUS_OFF = 'GLOBAL_SHOW_STATUS_OFF',
@@ -10,6 +12,7 @@ export enum GlobalActionsTypes {
     GLOBAL_NOTIFICATION_FLAG = 'GLOBAL_NOTIFICATION_FLAG',
 
     GLOBAL_CLEAR_FIELDS = 'GLOBAL_CLEAR_FIELDS',
+    GLOBAL_SOCKET = 'GLOBAL_SOCKET'
 }
 
 export interface IGlobalState {
@@ -21,6 +24,7 @@ export interface IGlobalState {
     error: boolean;
     success: boolean;
     msg: string;
+    socketIo: any;
 }
 
 interface IGlobalShowMessageSuccess {
@@ -31,6 +35,11 @@ interface IGlobalShowMessageSuccess {
 interface IGlobalShowMessageError {
     type: GlobalActionsTypes.GLOBAL_SHOW_MESSAGE_ERROR;
     payload: string;
+}
+
+interface IGlobalSocket {
+    type: GlobalActionsTypes.GLOBAL_SOCKET;
+    payload: Socket;
 }
 
 interface IGlobalShowStatusOn {
@@ -66,3 +75,4 @@ export type GlobalActions =
     | IGlobalPostFlag
     | IGlobalUserFlag
     | IGlobalNotificationFlag
+    | IGlobalSocket

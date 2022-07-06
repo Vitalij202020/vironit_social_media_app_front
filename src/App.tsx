@@ -15,7 +15,6 @@ import SearchUsersList from "./components/user/SearchUserList";
 import FriendsList from "./components/user/FriendsList";
 import ChatPage from "./pages/ChatPage";
 
-
 function App() {
     return (
         <>
