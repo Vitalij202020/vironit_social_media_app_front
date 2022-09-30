@@ -5,11 +5,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
+import {IUserLogin} from "../../redux/types/userTypes";
 
-export interface ILoginForm {
-    email: string;
-    password: string;
-}
 
 const MyDiv = styled("div")(({ theme }) => ({
     display: "flex",
@@ -38,9 +35,9 @@ const LoginForm: FC = () => {
         control,
         handleSubmit,
         formState: { errors },
-    } = useForm<ILoginForm>({resolver: yupResolver(loginSchema)});
+    } = useForm<IUserLogin>({resolver: yupResolver(loginSchema)});
 
-    const onSubmit: SubmitHandler<ILoginForm> = (data: ILoginForm) => {
+    const onSubmit: SubmitHandler<IUserLogin> = (data: IUserLogin) => {
         console.log(data);
     };
 

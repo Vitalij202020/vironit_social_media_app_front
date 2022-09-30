@@ -15,17 +15,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import * as yup from "yup";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
+import {IUserRegister} from "../../redux/types/userTypes";
+import {useActions} from "../../hooks/useActions";
 
-export interface IRegisterForm {
-    firstName: string;
-    lastName: string;
-    sex: string;
-    dateOfBirth: string;
-    nickName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-}
 
 const MyDiv = styled("div")(({theme}) => ({
     marginTop: theme.spacing(8),
@@ -64,14 +56,17 @@ const registerSchema = yup.object().shape({
 
 
 const RegisterForm = () => {
+    const {register} = useActions()
+
     const {
         control,
         handleSubmit,
         formState: {errors},
-    } = useForm<IRegisterForm>({resolver: yupResolver(registerSchema)});
+    } = useForm<IUserRegister>({resolver: yupResolver(registerSchema)});
 
-    const onSubmit: SubmitHandler<IRegisterForm> = (data: IRegisterForm) => {
+    const onSubmit: SubmitHandler<IUserRegister> = (data: IUserRegister) => {
         console.log("---before---", data);
+        register(data)
     };
 
     return (
